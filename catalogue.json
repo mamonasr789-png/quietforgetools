@@ -1,0 +1,56 @@
+{
+  "publisher": "QuietForgeTools",
+  "publisher_url": "https://quietforgetools.itch.io/",
+  "catalogue_repo": "https://github.com/mamonasr789-png/quietforgetools",
+  "note": "Public catalogue metadata only. Does not distribute paid source or purchase ZIPs. Prices and versions as documented in Task509.",
+  "products": [
+    {
+      "name": "CSV Column Mapper",
+      "version": "1.0.0",
+      "price_gbp": 5,
+      "category": "csv",
+      "summary": "Offline CSV column mapping / CSV schema mapping via editable JSON map. Renames and reorders columns; no joins, fuzzy matching, AI, or Excel xlsx.",
+      "runtime": "Python 3.10+ (stdlib)",
+      "purchase_url": "https://quietforgetools.itch.io/csv-column-mapper-offline-schema-mapping-tool?utm_source=github&utm_campaign=quietforgetools-catalogue"
+    },
+    {
+      "name": "CSV Duplicate Finder",
+      "version": "1.0.0",
+      "price_gbp": 5,
+      "category": "csv",
+      "summary": "Offline CSV duplicate detection by one column or composite key. Writes unique and duplicates CSVs for review; source file never modified; no fuzzy matching.",
+      "runtime": "Python 3.10+ (stdlib)",
+      "purchase_url": "https://quietforgetools.itch.io/csv-duplicate-finder-offline-duplicate-row-detection?utm_source=github&utm_campaign=quietforgetools-catalogue"
+    },
+    {
+      "name": "CSV Cleanup Toolkit",
+      "version": "1.0.0",
+      "price_gbp": 8,
+      "category": "csv",
+      "summary": "Discounted package of CSV Column Mapper and CSV Duplicate Finder as two independent CLIs. Individual tools also sold at £5 each (total £10); toolkit is not exclusive.",
+      "runtime": "Python 3.10+ (stdlib)",
+      "purchase_url": "https://quietforgetools.itch.io/csv-cleanup-toolkit-offline-mapper-duplicate-finder?utm_source=github&utm_campaign=quietforgetools-catalogue"
+    },
+    {
+      "name": "RFQ → Catalogue Matcher",
+      "version": "1.0.0",
+      "price_gbp": 9,
+      "category": "rfq",
+      "summary": "Offline RFQ catalogue matching: plain-text RFQ lines against a JSON catalogue with MATCHED / AMBIGUOUS / UNMATCHED statuses. Not OCR, PDF, ML, or ERP.",
+      "runtime": "Python 3.10+ (stdlib)",
+      "purchase_url": "https://quietforgetools.itch.io/rfq-catalogue-matcher-offline-line-item-matching-tool?utm_source=github&utm_campaign=quietforgetools-catalogue"
+    },
+    {
+      "name": "RPG Maker Case-Sensitive Asset Auditor",
+      "version": "0.3.1",
+      "price_gbp": 3,
+      "price_note": "Minimum £3 (flexible / NWYW on itch); not a fixed £3 price.",
+      "category": "rpg-maker",
+      "summary": "Local Chromium HTML tool that audits case-sensitive RPG Maker MV/MZ asset references. Read-only; no auto-fix; folder picker browsers only.",
+      "runtime": "Chrome / Edge / Brave (folder picker)",
+      "purchase_url": "https://quietforgetools.itch.io/rpg-maker-case-sensitive-asset-auditor?utm_source=github&utm_campaign=quietforgetools-catalogue",
+      "price_gbp_minimum": 3,
+      "price_flexible": true
+    }
+  ]
+}

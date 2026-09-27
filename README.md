@@ -1,8 +1,8 @@
 # QuietForgeTools — Offline Utility Catalogue
 
-QuietForgeTools publishes small **offline** utilities for practical data and game-project chores. Tools run on your machine (Python stdlib CLIs or a local Chromium HTML page). No accounts, no telemetry, no cloud processing of your files.
+QuietForgeTools publishes small **offline** utilities for practical data and game-project chores — including **offline CSV tools** for CSV column mapping, CSV schema mapping, and CSV duplicate detection, plus RFQ catalogue matching and case-sensitive RPG Maker asset auditing. Tools run on your machine (Python stdlib CLIs or a local Chromium HTML page). No accounts, no telemetry, no cloud processing of your files.
 
-This repository is a **public catalogue / documentation surface** only. It does **not** distribute paid source code or purchase ZIPs. Buy packaged downloads on [itch.io / QuietForgeTools](https://quietforgetools.itch.io/).
+This repository is a **public catalogue / documentation surface** only. It does **not** distribute paid source code or purchase ZIPs. Buy packaged downloads on [itch.io / QuietForgeTools](https://quietforgetools.itch.io/). Machine-readable product metadata: [`catalogue.json`](catalogue.json).
 
 Related product-specific documentation repos (unchanged by this catalogue):
 
@@ -15,11 +15,11 @@ Related product-specific documentation repos (unchanged by this catalogue):
 
 | If you need to… | Use | Price | Runtime |
 |---|---|---|---|
-| Rename / reorder CSV columns to a target schema (JSON map) | **CSV Column Mapper** | £5 | Python 3.10+ (stdlib) |
-| Find duplicate CSV rows by one column or a composite key | **CSV Duplicate Finder** | £5 | Python 3.10+ (stdlib) |
+| CSV column mapping / CSV schema mapping — rename & reorder columns to a target schema (JSON map) | **CSV Column Mapper** | £5 | Python 3.10+ (stdlib) |
+| Find duplicate CSV rows via CSV duplicate detection (one column or a composite key) | **CSV Duplicate Finder** | £5 | Python 3.10+ (stdlib) |
 | Get **both** Mapper + Duplicate Finder in one discounted package | **CSV Cleanup Toolkit** | £8 | Python 3.10+ (stdlib) |
-| Match plain-text RFQ lines to a JSON catalogue with human-review statuses | **RFQ → Catalogue Matcher** | £9 | Python 3.10+ (stdlib) |
-| Audit RPG Maker MV/MZ asset references for case-sensitive deploy mismatches | **RPG Maker Case-Sensitive Asset Auditor** | £3+ | Chrome / Edge / Brave (folder picker) |
+| RFQ catalogue matching — plain-text RFQ lines to a JSON catalogue with human-review statuses | **RFQ → Catalogue Matcher** | £9 | Python 3.10+ (stdlib) |
+| Audit case-sensitive RPG Maker assets (MV/MZ refs) for deploy mismatches | **RPG Maker Case-Sensitive Asset Auditor** | £3+ | Chrome / Edge / Brave (folder picker) |
 
 The CSV tools are independent of RFQ Matcher and RPG Auditor. They do **not** integrate with each other across those product lines.
 
@@ -43,7 +43,7 @@ The CSV tools are independent of RFQ Matcher and RPG Auditor. They do **not** in
 
 **Capabilities**
 
-- Rename / map columns via a small editable JSON file
+- CSV column mapping and CSV schema mapping via a small editable JSON file (rename / map columns)
 - Preserve exact target column order
 - Ignore unmapped source columns
 - Optional static / default values for target columns
@@ -70,7 +70,7 @@ The CSV tools are independent of RFQ Matcher and RPG Auditor. They do **not** in
 
 **Capabilities**
 
-- Duplicate detection by one column or a composite key
+- CSV duplicate detection by one column or a composite key (flags duplicate CSV rows)
 - Optional `--trim` and `--ignore-case`
 - Explicit blank-key modes (ignore or treat as values)
 - Writes `unique.csv` (first occurrence kept) and `duplicates.csv` (full groups for inspection)
@@ -115,11 +115,11 @@ The CSV tools are independent of RFQ Matcher and RPG Auditor. They do **not** in
 
 ### 4. RFQ → Catalogue Matcher — £9
 
-**Audience:** Suppliers and trade counters who turn RFQ text into quote-ready line statuses by hand.
+**Audience:** Suppliers and trade counters who need RFQ catalogue matching — turning RFQ text into quote-ready line statuses by hand.
 
 **Capabilities**
 
-- Input: JSON catalogue (`sku`, `description`, `unit`, `unit_price`) + plain-text RFQ with numbered lines in the documented format
+- RFQ catalogue matching: JSON catalogue (`sku`, `description`, `unit`, `unit_price`) + plain-text RFQ with numbered lines in the documented format
 - Output: `quote_ready.json` and `quote_ready.md`
 - Statuses:
   - **MATCHED** — one acceptable catalogue hit (exact SKU or strong description match)
@@ -143,12 +143,12 @@ The CSV tools are independent of RFQ Matcher and RPG Auditor. They do **not** in
 
 ### 5. RPG Maker Case-Sensitive Asset Auditor v0.3.1 — £3+
 
-**Audience:** RPG Maker MV/MZ creators deploying to case-sensitive hosts (Linux, many web exports) who need to catch Windows-works / deploy-breaks asset casing issues before release.
+**Audience:** RPG Maker MV/MZ creators deploying to case-sensitive hosts (Linux, many web exports) who need to catch Windows-works / deploy-breaks issues in case-sensitive RPG Maker assets before release.
 
 **Capabilities**
 
 - Local browser tool: open the HTML file, pick the project folder (read-only)
-- Detects MV/MZ from engine markers (`js/rpg_core.js`, `js/rmmz_core.js`, project files)
+- Audits case-sensitive RPG Maker assets (MV/MZ) from engine markers (`js/rpg_core.js`, `js/rmmz_core.js`, project files)
 - Reports CASE MISMATCH, UNRESOLVED/MISSING, CASE COLLISION, SCAN INCOMPLETE
 - Read-only: does not rename, edit, create, or delete project files
 - No network requests; no project upload
@@ -180,6 +180,8 @@ All listed tools are designed to run locally. Your CSVs / RFQs / RPG Maker proje
 
 ## Licence / ownership
 
-Product downloads are sold on itch.io under QuietForgeTools listings. This GitHub repository is documentation only.
+This repository contains **documentation and synthetic examples only**. It is not a grant of rights to the paid product binaries or source packaged on itch.io.
+
+Separately sold product artifacts (ZIP / HTML downloads purchased from QuietForgeTools itch listings) are governed by the terms distributed with each package and by the itch.io purchase terms. This catalogue does not invent or restate proprietary license text for those packages.
 
 Publisher: [QuietForgeTools on itch.io](https://quietforgetools.itch.io/)
