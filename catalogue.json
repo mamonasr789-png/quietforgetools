@@ -5,6 +5,15 @@
   "note": "Public catalogue metadata only. Does not distribute paid source or purchase ZIPs. Prices and versions as documented for live QuietForgeTools itch listings.",
   "products": [
     {
+      "name": "CSV → Excel-Ready",
+      "version": "1.0",
+      "price_gbp": 5,
+      "category": "csv",
+      "summary": "Offline browser UTF-8 BOM / encoding fixer so valid UTF-8 CSV opens more reliably in Excel. Preserves CSV bytes when BOM-only; optional explicit Windows-1252 conversion. Not schema mapping or duplicate detection.",
+      "runtime": "Modern desktop browser (local HTML)",
+      "purchase_url": "https://quietforgetools.itch.io/csv-excel-ready-offline-encoding-bom-fixer?utm_source=github&utm_campaign=quietforgetools-catalogue"
+    },
+    {
       "name": "CSV Column Mapper",
       "version": "1.0.0",
       "price_gbp": 5,
@@ -27,12 +36,12 @@
       "version": "1.0.0",
       "price_gbp": 8,
       "category": "csv",
-      "summary": "Discounted package of CSV Column Mapper and CSV Duplicate Finder as two independent CLIs. Individual tools also sold at \u00a35 each (total \u00a310); toolkit is not exclusive.",
+      "summary": "Discounted package of CSV Column Mapper and CSV Duplicate Finder as two independent CLIs. Individual tools also sold at £5 each (total £10); toolkit is not exclusive.",
       "runtime": "Python 3.10+ (stdlib)",
       "purchase_url": "https://quietforgetools.itch.io/csv-cleanup-toolkit-offline-mapper-duplicate-finder?utm_source=github&utm_campaign=quietforgetools-catalogue"
     },
     {
-      "name": "RFQ \u2192 Catalogue Matcher",
+      "name": "RFQ → Catalogue Matcher",
       "version": "1.0.0",
       "price_gbp": 9,
       "category": "rfq",
@@ -44,7 +53,7 @@
       "name": "RPG Maker Case-Sensitive Asset Auditor",
       "version": "0.3.1",
       "price_gbp": 3,
-      "price_note": "Minimum \u00a33 (flexible / NWYW on itch); not a fixed \u00a33 price.",
+      "price_note": "Minimum £3 (flexible / NWYW on itch); not a fixed £3 price.",
       "category": "rpg-maker",
       "summary": "Local Chromium HTML tool that audits case-sensitive RPG Maker MV/MZ asset references. Read-only; no auto-fix; folder picker browsers only.",
       "runtime": "Chrome / Edge / Brave (folder picker)",

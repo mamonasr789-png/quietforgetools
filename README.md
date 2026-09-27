@@ -1,6 +1,6 @@
 # QuietForgeTools — Offline Utility Catalogue
 
-QuietForgeTools publishes small **offline** utilities for practical data and game-project chores — including **offline CSV tools** for CSV column mapping, CSV schema mapping, and CSV duplicate detection, plus RFQ catalogue matching, case-sensitive RPG Maker asset auditing, and offline URL redirect / broken-link **analysis of supplied observations** (not a live crawler). Tools run on your machine (Python stdlib CLIs or a local Chromium HTML page). No accounts, no telemetry, no cloud processing of your files.
+QuietForgeTools publishes small **offline** utilities for practical data and game-project chores — including **offline CSV tools** for Excel-ready encoding/BOM fixing, CSV column mapping, CSV schema mapping, and CSV duplicate detection, plus RFQ catalogue matching, case-sensitive RPG Maker asset auditing, and offline URL redirect / broken-link **analysis of supplied observations** (not a live crawler). Tools run on your machine (Python stdlib CLIs or a local Chromium HTML page). No accounts, no telemetry, no cloud processing of your files.
 
 This repository is a **public catalogue / documentation surface** only. It does **not** distribute paid source code or purchase ZIPs. Buy packaged downloads on [itch.io / QuietForgeTools](https://quietforgetools.itch.io/). Machine-readable product metadata: [`catalogue.json`](catalogue.json).
 
@@ -8,6 +8,7 @@ This repository is a **public catalogue / documentation surface** only. It does 
 
 Related product-specific documentation repos (unchanged by this catalogue):
 
+- [quietforgetools-csv-excel-ready](https://github.com/mamonasr789-png/quietforgetools-csv-excel-ready)
 - [quietforgetools-csv-column-mapper](https://github.com/mamonasr789-png/quietforgetools-csv-column-mapper)
 - [quietforgetools-rfq-catalogue-matcher](https://github.com/mamonasr789-png/quietforgetools-rfq-catalogue-matcher)
 
@@ -17,6 +18,7 @@ Related product-specific documentation repos (unchanged by this catalogue):
 
 | If you need to… | Use | Price | Runtime |
 |---|---|---|---|
+| Prepare UTF-8 CSV for Excel (BOM / encoding) without uploading | **CSV → Excel-Ready** | £5 | Desktop browser (local HTML) |
 | CSV column mapping / CSV schema mapping — rename & reorder columns to a target schema (JSON map) | **CSV Column Mapper** | £5 | Python 3.10+ (stdlib) |
 | Find duplicate CSV rows via CSV duplicate detection (one column or a composite key) | **CSV Duplicate Finder** | £5 | Python 3.10+ (stdlib) |
 | Get **both** Mapper + Duplicate Finder in one discounted package | **CSV Cleanup Toolkit** | £8 | Python 3.10+ (stdlib) |
@@ -24,15 +26,16 @@ Related product-specific documentation repos (unchanged by this catalogue):
 | Audit case-sensitive RPG Maker assets (MV/MZ refs) for deploy mismatches | **RPG Maker Case-Sensitive Asset Auditor** | £3+ | Chrome / Edge / Brave (folder picker) |
 | Analyze supplied URL/status observations for redirect chains and broken-link signals (offline; no crawl) | **URL Audit Report** | £7 | Python 3.10+ (stdlib) |
 
-The CSV tools, RFQ Matcher, RPG Auditor, and URL Audit Report are independent product lines. They do **not** integrate with each other.
+The CSV tools (including Excel-Ready), RFQ Matcher, RPG Auditor, and URL Audit Report are independent product lines. They do **not** integrate with each other — cross-links below are related-purchase pointers only, not a shared pipeline.
 
 **Cross-product positioning**
 
 | Product | Role |
 |---|---|
+| CSV → Excel-Ready | Encoding / UTF-8 BOM preparation for Excel (browser HTML; not schema or dedupe) |
 | Column Mapper | Schema transformation (rename / reorder / defaults) |
 | Duplicate Finder | Duplicate identification (review groups; source never modified) |
-| Cleanup Toolkit | Discounted package containing both CSV tools (two separate CLIs) |
+| Cleanup Toolkit | Discounted package of Mapper + Duplicate Finder (two separate CLIs; £8 vs £5+£5) |
 | RFQ Matcher | Line-item matching against a catalogue with MATCHED / AMBIGUOUS / UNMATCHED |
 | RPG Auditor | RPG Maker MV/MZ case-sensitive asset reference auditing (read-only) |
 | URL Audit Report | Offline analysis of supplied URL/status observations (redirect chains / broken-link signals; no crawl, no network) |
@@ -41,7 +44,36 @@ The CSV tools, RFQ Matcher, RPG Auditor, and URL Audit Report are independent pr
 
 ## Products
 
-### 1. CSV Column Mapper v1.0.0 — £5
+### 1. CSV → Excel-Ready v1.0 — £5
+
+**Audience:** Anyone whose valid UTF-8 CSV looks garbled (mojibake) when opened directly in Excel and who wants an offline BOM/encoding fix without uploading files.
+
+**Capabilities**
+
+- Add Excel-compatible UTF-8 BOM
+- Preserve original CSV bytes when BOM addition alone is enough (no parse/re-serialize)
+- Detect an existing UTF-8 BOM (keeps a single BOM)
+- Optional explicit Windows-1252 conversion (never auto-guessed)
+- Runs offline in a modern desktop browser — no uploads, no accounts
+
+**Limitations (v1)**
+
+- Not a general encoding-corruption repair service
+- Excel behaviour still varies by version, OS, and how the file is opened
+- Not CSV schema mapping and not duplicate detection
+
+**Runtime:** Modern desktop browser (open the local HTML from the itch ZIP)
+
+**Buy:** [CSV → Excel-Ready on itch.io](https://quietforgetools.itch.io/csv-excel-ready-offline-encoding-bom-fixer?utm_source=github&utm_campaign=quietforgetools-catalogue)
+
+**Also available (related CSV utilities — separate purchases; no shared automation):**
+
+- [CSV Column Mapper](https://quietforgetools.itch.io/csv-column-mapper-offline-schema-mapping-tool?utm_source=github&utm_campaign=quietforgetools-catalogue) (£5) — rename/reorder columns via JSON map (Python CLI)
+- [CSV Duplicate Finder](https://quietforgetools.itch.io/csv-duplicate-finder-offline-duplicate-row-detection?utm_source=github&utm_campaign=quietforgetools-catalogue) (£5) — find duplicate rows by key (Python CLI)
+
+---
+
+### 2. CSV Column Mapper v1.0.0 — £5
 
 **Audience:** Anyone who receives CSV exports with one header layout and needs another for CRM, accounting, or spreadsheet import.
 
@@ -66,9 +98,15 @@ The CSV tools, RFQ Matcher, RPG Auditor, and URL Audit Report are independent pr
 
 **Buy:** [CSV Column Mapper on itch.io](https://quietforgetools.itch.io/csv-column-mapper-offline-schema-mapping-tool?utm_source=github&utm_campaign=quietforgetools-catalogue)
 
+**Also available:**
+
+- [CSV → Excel-Ready](https://quietforgetools.itch.io/csv-excel-ready-offline-encoding-bom-fixer?utm_source=github&utm_campaign=quietforgetools-catalogue) (£5) — offline UTF-8 BOM / encoding fixer for Excel (browser HTML; not schema mapping)
+- [CSV Duplicate Finder](https://quietforgetools.itch.io/csv-duplicate-finder-offline-duplicate-row-detection?utm_source=github&utm_campaign=quietforgetools-catalogue) (£5) — duplicate row detection by key (separate CLI)
+- [CSV Cleanup Toolkit](https://quietforgetools.itch.io/csv-cleanup-toolkit-offline-mapper-duplicate-finder?utm_source=github&utm_campaign=quietforgetools-catalogue) (£8) — Mapper + Duplicate Finder in one package (£5 + £5 = £10 separately)
+
 ---
 
-### 2. CSV Duplicate Finder v1.0.0 — £5
+### 3. CSV Duplicate Finder v1.0.0 — £5
 
 **Audience:** Small businesses spotting accidental duplicate rows in customer, order, or contact CSV exports before importing elsewhere.
 
@@ -94,9 +132,15 @@ The CSV tools, RFQ Matcher, RPG Auditor, and URL Audit Report are independent pr
 
 **Buy:** [CSV Duplicate Finder on itch.io](https://quietforgetools.itch.io/csv-duplicate-finder-offline-duplicate-row-detection?utm_source=github&utm_campaign=quietforgetools-catalogue)
 
+**Also available:**
+
+- [CSV → Excel-Ready](https://quietforgetools.itch.io/csv-excel-ready-offline-encoding-bom-fixer?utm_source=github&utm_campaign=quietforgetools-catalogue) (£5) — offline UTF-8 BOM / encoding fixer for Excel (browser HTML; not duplicate detection)
+- [CSV Column Mapper](https://quietforgetools.itch.io/csv-column-mapper-offline-schema-mapping-tool?utm_source=github&utm_campaign=quietforgetools-catalogue) (£5) — rename/reorder columns via JSON map (separate CLI)
+- [CSV Cleanup Toolkit](https://quietforgetools.itch.io/csv-cleanup-toolkit-offline-mapper-duplicate-finder?utm_source=github&utm_campaign=quietforgetools-catalogue) (£8) — Mapper + Duplicate Finder in one package (£5 + £5 = £10 separately)
+
 ---
 
-### 3. CSV Cleanup Toolkit v1.0.0 — £8
+### 4. CSV Cleanup Toolkit v1.0.0 — £8
 
 **Audience:** Buyers who want both CSV utilities in one purchase at a modest discount.
 
@@ -115,9 +159,18 @@ The CSV tools, RFQ Matcher, RPG Auditor, and URL Audit Report are independent pr
 
 **Buy:** [CSV Cleanup Toolkit on itch.io](https://quietforgetools.itch.io/csv-cleanup-toolkit-offline-mapper-duplicate-finder?utm_source=github&utm_campaign=quietforgetools-catalogue)
 
+**Prefer only one function?** Same utilities are sold separately (no bundle exclusivity):
+
+- [CSV Column Mapper](https://quietforgetools.itch.io/csv-column-mapper-offline-schema-mapping-tool?utm_source=github&utm_campaign=quietforgetools-catalogue) — £5 standalone
+- [CSV Duplicate Finder](https://quietforgetools.itch.io/csv-duplicate-finder-offline-duplicate-row-detection?utm_source=github&utm_campaign=quietforgetools-catalogue) — £5 standalone
+
+Bundle £8 vs £5 + £5 = £10 separately. Tools remain independent CLIs either way.
+
+**Also available:** [CSV → Excel-Ready](https://quietforgetools.itch.io/csv-excel-ready-offline-encoding-bom-fixer?utm_source=github&utm_campaign=quietforgetools-catalogue) (£5) — offline UTF-8 BOM / encoding fixer for Excel (not included in this toolkit)
+
 ---
 
-### 4. RFQ → Catalogue Matcher — £9
+### 5. RFQ → Catalogue Matcher — £9
 
 **Audience:** Suppliers and trade counters who need RFQ catalogue matching — turning RFQ text into quote-ready line statuses by hand.
 
@@ -145,7 +198,7 @@ The CSV tools, RFQ Matcher, RPG Auditor, and URL Audit Report are independent pr
 
 ---
 
-### 5. RPG Maker Case-Sensitive Asset Auditor v0.3.1 — £3+
+### 6. RPG Maker Case-Sensitive Asset Auditor v0.3.1 — £3+
 
 **Audience:** RPG Maker MV/MZ creators deploying to case-sensitive hosts (Linux, many web exports) who need to catch Windows-works / deploy-breaks issues in case-sensitive RPG Maker assets before release.
 
@@ -172,7 +225,7 @@ The CSV tools, RFQ Matcher, RPG Auditor, and URL Audit Report are independent pr
 
 ---
 
-### 6. URL Audit Report — Offline Redirect & Broken-Link Analyzer v1.0.0 — £7
+### 7. URL Audit Report — Offline Redirect & Broken-Link Analyzer v1.0.0 — £7
 
 **Audience:** Anyone who already has URL/status observations (crawler export, monitor extract, logs, or manual checks) and wants redirect-chain and broken-link reports **without** running another live crawl.
 
