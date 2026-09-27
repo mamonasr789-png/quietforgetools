@@ -4,6 +4,8 @@ QuietForgeTools publishes small **offline** utilities for practical data and gam
 
 This repository is a **public catalogue / documentation surface** only. It does **not** distribute paid source code or purchase ZIPs. Buy packaged downloads on [itch.io / QuietForgeTools](https://quietforgetools.itch.io/). Machine-readable product metadata: [`catalogue.json`](catalogue.json).
 
+**Buyer FAQ:** [`FAQ.md`](FAQ.md) — offline scope, what's included, purchase links.
+
 Related product-specific documentation repos (unchanged by this catalogue):
 
 - [quietforgetools-csv-column-mapper](https://github.com/mamonasr789-png/quietforgetools-csv-column-mapper)
