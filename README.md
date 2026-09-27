@@ -170,7 +170,7 @@ Bundle £8 vs £5 + £5 = £10 separately. Tools remain independent CLIs either 
 
 ---
 
-### 5. RFQ → Catalogue Matcher — £9
+### 5. RFQ → Catalogue Matcher v1.0.1 — £9
 
 **Audience:** Suppliers and trade counters who need RFQ catalogue matching — turning RFQ text into quote-ready line statuses by hand.
 
@@ -183,7 +183,8 @@ Bundle £8 vs £5 + £5 = £10 separately. Tools remain independent CLIs either 
   - **AMBIGUOUS** — two or more plausible SKUs (you choose; never auto-picked)
   - **UNMATCHED** — no acceptable candidate (never invents a match)
 - Offline; no network requests; no paid APIs
-- Packaged as `RFQ-Catalogue-Matcher-v1.0.0` downloadable ZIP
+- Packaged as `RFQ-Catalogue-Matcher-v1.0.1` downloadable ZIP
+- **v1.0.1:** handles UTF-8 BOM RFQ text correctly; treats certain underspecified catalogue matches more conservatively as ambiguous
 
 **Limitations**
 
