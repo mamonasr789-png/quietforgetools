@@ -49,6 +49,10 @@ No. It produces review-oriented statuses (**MATCHED** / **AMBIGUOUS** / **UNMATC
 
 Check the product limitations on this catalogue and on the itch listing before buying. This FAQ does not invent refunds, SLAs, compatibility guarantees, or support promises beyond what the public listings already state.
 
+## Is URL Audit Report a live broken-link crawler?
+
+No. A live broken-link crawler/checker visits websites and fetches URLs over the network. **URL Audit Report** does neither. It analyzes **already-collected** `source_url` / `target_url` / `status_code` observations offline and writes audit reports from that supplied data. It does not crawl sites and does not make network requests.
+
 ## Where do I buy each tool?
 
 Public itch.io pages (same catalogue UTM as the README):

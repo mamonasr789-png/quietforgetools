@@ -1,6 +1,6 @@
 # QuietForgeTools — Offline Utility Catalogue
 
-QuietForgeTools publishes small **offline** utilities for practical data and game-project chores — including **offline CSV tools** for CSV column mapping, CSV schema mapping, and CSV duplicate detection, plus RFQ catalogue matching and case-sensitive RPG Maker asset auditing. Tools run on your machine (Python stdlib CLIs or a local Chromium HTML page). No accounts, no telemetry, no cloud processing of your files.
+QuietForgeTools publishes small **offline** utilities for practical data and game-project chores — including **offline CSV tools** for CSV column mapping, CSV schema mapping, and CSV duplicate detection, plus RFQ catalogue matching, case-sensitive RPG Maker asset auditing, and offline URL redirect / broken-link **analysis of supplied observations** (not a live crawler). Tools run on your machine (Python stdlib CLIs or a local Chromium HTML page). No accounts, no telemetry, no cloud processing of your files.
 
 This repository is a **public catalogue / documentation surface** only. It does **not** distribute paid source code or purchase ZIPs. Buy packaged downloads on [itch.io / QuietForgeTools](https://quietforgetools.itch.io/). Machine-readable product metadata: [`catalogue.json`](catalogue.json).
 
@@ -22,8 +22,9 @@ Related product-specific documentation repos (unchanged by this catalogue):
 | Get **both** Mapper + Duplicate Finder in one discounted package | **CSV Cleanup Toolkit** | £8 | Python 3.10+ (stdlib) |
 | RFQ catalogue matching — plain-text RFQ lines to a JSON catalogue with human-review statuses | **RFQ → Catalogue Matcher** | £9 | Python 3.10+ (stdlib) |
 | Audit case-sensitive RPG Maker assets (MV/MZ refs) for deploy mismatches | **RPG Maker Case-Sensitive Asset Auditor** | £3+ | Chrome / Edge / Brave (folder picker) |
+| Analyze supplied URL/status observations for redirect chains and broken-link signals (offline; no crawl) | **URL Audit Report** | £7 | Python 3.10+ (stdlib) |
 
-The CSV tools are independent of RFQ Matcher and RPG Auditor. They do **not** integrate with each other across those product lines.
+The CSV tools, RFQ Matcher, RPG Auditor, and URL Audit Report are independent product lines. They do **not** integrate with each other.
 
 **Cross-product positioning**
 
@@ -34,6 +35,7 @@ The CSV tools are independent of RFQ Matcher and RPG Auditor. They do **not** in
 | Cleanup Toolkit | Discounted package containing both CSV tools (two separate CLIs) |
 | RFQ Matcher | Line-item matching against a catalogue with MATCHED / AMBIGUOUS / UNMATCHED |
 | RPG Auditor | RPG Maker MV/MZ case-sensitive asset reference auditing (read-only) |
+| URL Audit Report | Offline analysis of supplied URL/status observations (redirect chains / broken-link signals; no crawl, no network) |
 
 ---
 
@@ -170,15 +172,43 @@ The CSV tools are independent of RFQ Matcher and RPG Auditor. They do **not** in
 
 ---
 
+### 6. URL Audit Report — Offline Redirect & Broken-Link Analyzer v1.0.0 — £7
+
+**Audience:** Anyone who already has URL/status observations (crawler export, monitor extract, logs, or manual checks) and wants redirect-chain and broken-link reports **without** running another live crawl.
+
+**Capabilities**
+
+- Offline analysis of supplied CSV observations: `source_url`, `target_url`, `status_code`
+- Identifies redirect chains and loops from those observations
+- Surfaces supplied 4xx/5xx observations and unresolved chain endings
+- Writes `audit_summary.csv`, `redirect_chains.csv`, and `broken_links.csv`
+- Python 3.10+; standard library only — no `pip` install
+- Offline; **does not crawl websites**; **does not make network requests**
+
+**Limitations (v1)**
+
+- Not a live broken-link checker or website crawler
+- Does not contact any host; does not claim statuses are currently true
+- Not an SEO rank / traffic tool; not a replacement for Screaming Frog, Ahrefs, Sitebulb, etc.
+- Does not integrate with the CSV tools, RFQ Matcher, or RPG Auditor
+
+**Synthetic observation sketch:** `/old-page → /new-page → /final-page` with supplied 301 / 301 / 200 — see [`examples/url-audit-redirect-chain.md`](examples/url-audit-redirect-chain.md).
+
+**Runtime:** Python 3.10+ (standard library only)
+
+**Buy:** [URL Audit Report on itch.io](https://quietforgetools.itch.io/url-audit-report-offline-redirect-broken-link-analyzer?utm_source=github&utm_campaign=quietforgetools-catalogue)
+
+---
+
 ## Synthetic workflow example
 
-See [`examples/README.md`](examples/README.md) for a fictional small-business flow: customer export → duplicate review → schema mapping (synthetic data only).
+See [`examples/README.md`](examples/README.md) for a fictional small-business CSV flow (customer export → duplicate review → schema mapping). See [`examples/url-audit-redirect-chain.md`](examples/url-audit-redirect-chain.md) for a tiny synthetic redirect-chain observation sketch for URL Audit Report. Synthetic data only.
 
 ---
 
 ## Privacy
 
-All listed tools are designed to run locally. Your CSVs / RFQs / RPG Maker projects are not uploaded by the tools themselves. This catalogue repo contains no customer data, credentials, or payment assets.
+All listed tools are designed to run locally. Your CSVs / RFQs / RPG Maker projects / URL observation exports are not uploaded by the tools themselves. This catalogue repo contains no customer data, credentials, or payment assets.
 
 ## Licence / ownership
 
