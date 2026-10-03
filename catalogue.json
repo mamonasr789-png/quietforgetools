@@ -12,6 +12,13 @@
       "summary": "Browser checklist to manually mark form, email, mobile, and delivery checks when a WordPress enquiry path seems broken; copyable diagnostic summary.",
       "runtime": "Browser (local; nothing uploaded)",
       "url": "https://mamonasr789-png.github.io/quietforgetools-wp-enquiry-checklist/"
+    },
+    {
+      "name": "WordPress Contact Form Says Submitted but No Enquiry Received",
+      "price": "free",
+      "summary": "Visitor sees success/thank-you but the business cannot find the enquiry; traces storage, notifications, mail, recipient, and CRM.",
+      "runtime": "Static guide \u00b7 DIY first",
+      "url": "https://mamonasr789-png.github.io/quietforgetools-wp-form-submitted-no-enquiry/"
     }
   ],
   "wordpress_services": [
