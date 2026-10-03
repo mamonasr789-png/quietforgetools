@@ -1,10 +1,38 @@
-# QuietForgeTools — Offline Utility Catalogue
+# QuietForgeTools — small practical tools and fixed-scope technical services.
 
-QuietForgeTools publishes small **offline** utilities for practical data and game-project chores — including **offline CSV tools** for Excel-ready encoding/BOM fixing, CSV column mapping, CSV schema mapping, and CSV duplicate detection, plus RFQ catalogue matching, case-sensitive RPG Maker asset auditing, and offline URL redirect / broken-link **analysis of supplied observations** (not a live crawler). Tools run on your machine (Python stdlib CLIs or a local Chromium HTML page). No accounts, no telemetry, no cloud processing of your files.
+**Public hub:** [https://mamonasr789-png.github.io/quietforgetools/](https://mamonasr789-png.github.io/quietforgetools/)
 
-This repository is a **public catalogue / documentation surface** only. It does **not** distribute paid source code or purchase ZIPs. Buy packaged downloads on [itch.io / QuietForgeTools](https://quietforgetools.itch.io/). Machine-readable product metadata: [`catalogue.json`](catalogue.json).
+QuietForgeTools publishes a small set of **existing** free tools, fixed-scope WordPress services, and offline utilities. This repository is a **catalogue / navigation surface** only — it does not sell new products, host payment forms, or distribute paid ZIPs. Buy itch utilities on [itch.io / QuietForgeTools](https://quietforgetools.itch.io/). Machine-readable metadata: [`catalogue.json`](catalogue.json). Buyer FAQ for offline utilities: [`FAQ.md`](FAQ.md).
 
-**Buyer FAQ:** [`FAQ.md`](FAQ.md) — offline scope, what's included, purchase links.
+Browser utilities that process data in your browser do so **locally on your machine** (WordPress Enquiry Path Checklist; CSV → Excel-Ready HTML; RPG Maker Case Auditor). Python CLI utilities run **offline on your computer** and are not browser apps. WordPress services are fixed-scope technical work; each service page handles enquiry and payment after scope confirmation (no private payment links on this hub).
+
+---
+
+## Free tools
+
+| Name | What it is | Price | Action |
+|---|---|---|---|
+| **WordPress Enquiry Path Checklist** | Browser checklist to manually mark form, email, mobile, and delivery checks when a WordPress enquiry path seems broken — copyable diagnostic summary. | Free | [Open checklist](https://mamonasr789-png.github.io/quietforgetools-wp-enquiry-checklist/) |
+
+## WordPress services
+
+| Name | What it is | Price | Action |
+|---|---|---|---|
+| **WordPress Quick Fix** | One agreed WordPress problem: written diagnosis, one fix attempt, verification, short completion note. | £49 | [View service](https://mamonasr789-png.github.io/quietforgetools-wp-maintenance/quick-fix/) |
+| **WordPress Update & Safety Check** | One maintenance pass: backup check, core/theme/plugin updates, smoke tests, one rollback attempt if an update we apply breaks something, short report. | £59 | [View service](https://mamonasr789-png.github.io/quietforgetools-wp-maintenance/) |
+| **Enquiry Path Repair** | Fixed-scope repair for a broken WordPress contact, enquiry, or quote path after diagnosis — bounded work with a written outcome. | £149 | [View service](https://mamonasr789-png.github.io/quietforgetools-enquiry-repair/) |
+
+## Offline / browser utilities
+
+| Name | What it is | Price | Runtime | Action |
+|---|---|---|---|---|
+| **RPG Maker Case-Sensitive Asset Auditor** | Local Chromium HTML tool that audits case-sensitive RPG Maker MV/MZ asset references for deploy mismatches (read-only). | £3 | Browser (Chrome / Edge / Brave) | [Buy on itch.io](https://quietforgetools.itch.io/rpg-maker-case-sensitive-asset-auditor) |
+| **CSV → Excel-Ready** | Offline browser HTML that adds an Excel-compatible UTF-8 BOM / encoding fix so valid UTF-8 CSV opens more reliably in Excel. | £5 | Desktop browser (local HTML) | [Buy on itch.io](https://quietforgetools.itch.io/csv-excel-ready-offline-encoding-bom-fixer) |
+| **CSV Column Mapper** | Offline Python CLI for CSV column / schema mapping via an editable JSON map (rename and reorder columns). | £5 | Python 3.10+ stdlib (offline local) | [Buy on itch.io](https://quietforgetools.itch.io/csv-column-mapper-offline-schema-mapping-tool) |
+| **CSV Duplicate Finder** | Offline Python CLI that finds duplicate CSV rows by one column or a composite key; source file never modified. | £5 | Python 3.10+ stdlib (offline local) | [Buy on itch.io](https://quietforgetools.itch.io/csv-duplicate-finder-offline-duplicate-row-detection) |
+| **CSV Cleanup Toolkit** | Discounted package of CSV Column Mapper and CSV Duplicate Finder as two independent offline CLIs. | £8 | Python 3.10+ stdlib (offline local) | [Buy on itch.io](https://quietforgetools.itch.io/csv-cleanup-toolkit-offline-mapper-duplicate-finder) |
+| **RFQ → Catalogue Matcher** | Offline Python CLI that matches plain-text RFQ line items to a JSON catalogue with MATCHED / AMBIGUOUS / UNMATCHED statuses. | £9 | Python 3.10+ stdlib (offline local) | [Buy on itch.io](https://quietforgetools.itch.io/rfq-catalogue-matcher-offline-line-item-matching-tool) |
+| **URL Audit Report** | Offline Python CLI that analyses supplied URL/status observations for redirect chains and broken-link signals (no crawl, no network). | £7 | Python 3.10+ stdlib (offline local) | [Buy on itch.io](https://quietforgetools.itch.io/url-audit-report-offline-redirect-broken-link-analyzer) |
 
 Related product-specific documentation repos (unchanged by this catalogue):
 
@@ -14,33 +42,9 @@ Related product-specific documentation repos (unchanged by this catalogue):
 
 ---
 
-## Choose by task
+## Detailed offline-utility notes
 
-| If you need to… | Use | Price | Runtime |
-|---|---|---|---|
-| Prepare UTF-8 CSV for Excel (BOM / encoding) without uploading | **CSV → Excel-Ready** | £5 | Desktop browser (local HTML) |
-| CSV column mapping / CSV schema mapping — rename & reorder columns to a target schema (JSON map) | **CSV Column Mapper** | £5 | Python 3.10+ (stdlib) |
-| Find duplicate CSV rows via CSV duplicate detection (one column or a composite key) | **CSV Duplicate Finder** | £5 | Python 3.10+ (stdlib) |
-| Get **both** Mapper + Duplicate Finder in one discounted package | **CSV Cleanup Toolkit** | £8 | Python 3.10+ (stdlib) |
-| RFQ catalogue matching — plain-text RFQ lines to a JSON catalogue with human-review statuses | **RFQ → Catalogue Matcher** | £9 | Python 3.10+ (stdlib) |
-| Audit case-sensitive RPG Maker assets (MV/MZ refs) for deploy mismatches | **RPG Maker Case-Sensitive Asset Auditor** | £3+ | Chrome / Edge / Brave (folder picker) |
-| Analyze supplied URL/status observations for redirect chains and broken-link signals (offline; no crawl) | **URL Audit Report** | £7 | Python 3.10+ (stdlib) |
-
-The CSV tools (including Excel-Ready), RFQ Matcher, RPG Auditor, and URL Audit Report are independent product lines. They do **not** integrate with each other — cross-links below are related-purchase pointers only, not a shared pipeline.
-
-**Cross-product positioning**
-
-| Product | Role |
-|---|---|
-| CSV → Excel-Ready | Encoding / UTF-8 BOM preparation for Excel (browser HTML; not schema or dedupe) |
-| Column Mapper | Schema transformation (rename / reorder / defaults) |
-| Duplicate Finder | Duplicate identification (review groups; source never modified) |
-| Cleanup Toolkit | Discounted package of Mapper + Duplicate Finder (two separate CLIs; £8 vs £5+£5) |
-| RFQ Matcher | Line-item matching against a catalogue with MATCHED / AMBIGUOUS / UNMATCHED |
-| RPG Auditor | RPG Maker MV/MZ case-sensitive asset reference auditing (read-only) |
-| URL Audit Report | Offline analysis of supplied URL/status observations (redirect chains / broken-link signals; no crawl, no network) |
-
----
+The sections below document the seven itch utilities in more depth (capabilities, limitations, cross-links). Prices match the live listings. Free tools and WordPress services are indexed above only — their offer pages are the source of truth for scope and payment.
 
 ## Products
 
@@ -262,7 +266,7 @@ See [`examples/README.md`](examples/README.md) for a fictional small-business CS
 
 ## Privacy
 
-All listed tools are designed to run locally. Your CSVs / RFQs / RPG Maker projects / URL observation exports are not uploaded by the tools themselves. This catalogue repo contains no customer data, credentials, or payment assets.
+Offline utilities are designed to run locally. Browser-local tools (Checklist, CSV → Excel-Ready HTML, Case Auditor) process data in your browser without uploading your files. Python CLIs run on your machine with no network requirement for their core function. Your CSVs / RFQs / RPG Maker projects / URL observation exports are not uploaded by the tools themselves. WordPress services are separate fixed-scope work and may require temporary site access after scope confirmation. This catalogue repo contains no customer data, credentials, private payment URLs, or analytics/cookies.
 
 ## Licence / ownership
 

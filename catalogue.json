@@ -1,17 +1,57 @@
 {
   "publisher": "QuietForgeTools",
   "publisher_url": "https://quietforgetools.itch.io/",
+  "hub_url": "https://mamonasr789-png.github.io/quietforgetools/",
   "catalogue_repo": "https://github.com/mamonasr789-png/quietforgetools",
-  "note": "Public catalogue metadata only. Does not distribute paid source or purchase ZIPs. Prices and versions as documented for live QuietForgeTools itch listings.",
+  "positioning": "QuietForgeTools \u2014 small practical tools and fixed-scope technical services.",
+  "note": "Public commercial catalogue metadata only. Does not distribute paid source or purchase ZIPs. Does not expose private payment URLs. Prices as documented for live QuietForgeTools listings; underlying offers unchanged by this catalogue.",
+  "free_tools": [
+    {
+      "name": "WordPress Enquiry Path Checklist",
+      "price": "free",
+      "summary": "Browser checklist to manually mark form, email, mobile, and delivery checks when a WordPress enquiry path seems broken; copyable diagnostic summary.",
+      "runtime": "Browser (local; nothing uploaded)",
+      "url": "https://mamonasr789-png.github.io/quietforgetools-wp-enquiry-checklist/"
+    }
+  ],
+  "wordpress_services": [
+    {
+      "name": "WordPress Quick Fix",
+      "price_gbp": 49,
+      "summary": "One agreed WordPress problem: written diagnosis, one fix attempt, verification, short completion note.",
+      "url": "https://mamonasr789-png.github.io/quietforgetools-wp-maintenance/quick-fix/"
+    },
+    {
+      "name": "WordPress Update & Safety Check",
+      "price_gbp": 59,
+      "summary": "One maintenance pass: backup check, core/theme/plugin updates, smoke tests, one rollback attempt if an update we apply breaks something, short report.",
+      "url": "https://mamonasr789-png.github.io/quietforgetools-wp-maintenance/"
+    },
+    {
+      "name": "Enquiry Path Repair",
+      "price_gbp": 149,
+      "summary": "Fixed-scope repair for a broken WordPress contact, enquiry, or quote path after diagnosis \u2014 bounded work with a written outcome.",
+      "url": "https://mamonasr789-png.github.io/quietforgetools-enquiry-repair/"
+    }
+  ],
   "products": [
     {
-      "name": "CSV → Excel-Ready",
+      "name": "RPG Maker Case-Sensitive Asset Auditor",
+      "version": "0.3.1",
+      "price_gbp": 3,
+      "category": "rpg-maker",
+      "summary": "Local Chromium HTML tool that audits case-sensitive RPG Maker MV/MZ asset references. Read-only; no auto-fix; folder picker browsers only.",
+      "runtime": "Chrome / Edge / Brave (folder picker)",
+      "purchase_url": "https://quietforgetools.itch.io/rpg-maker-case-sensitive-asset-auditor"
+    },
+    {
+      "name": "CSV \u2192 Excel-Ready",
       "version": "1.0",
       "price_gbp": 5,
       "category": "csv",
       "summary": "Offline browser UTF-8 BOM / encoding fixer so valid UTF-8 CSV opens more reliably in Excel. Preserves CSV bytes when BOM-only; optional explicit Windows-1252 conversion. Not schema mapping or duplicate detection.",
       "runtime": "Modern desktop browser (local HTML)",
-      "purchase_url": "https://quietforgetools.itch.io/csv-excel-ready-offline-encoding-bom-fixer?utm_source=github&utm_campaign=quietforgetools-catalogue"
+      "purchase_url": "https://quietforgetools.itch.io/csv-excel-ready-offline-encoding-bom-fixer"
     },
     {
       "name": "CSV Column Mapper",
@@ -20,7 +60,7 @@
       "category": "csv",
       "summary": "Offline CSV column mapping / CSV schema mapping via editable JSON map. Renames and reorders columns; no joins, fuzzy matching, AI, or Excel xlsx.",
       "runtime": "Python 3.10+ (stdlib)",
-      "purchase_url": "https://quietforgetools.itch.io/csv-column-mapper-offline-schema-mapping-tool?utm_source=github&utm_campaign=quietforgetools-catalogue"
+      "purchase_url": "https://quietforgetools.itch.io/csv-column-mapper-offline-schema-mapping-tool"
     },
     {
       "name": "CSV Duplicate Finder",
@@ -29,37 +69,25 @@
       "category": "csv",
       "summary": "Offline CSV duplicate detection by one column or composite key. Writes unique and duplicates CSVs for review; source file never modified; no fuzzy matching.",
       "runtime": "Python 3.10+ (stdlib)",
-      "purchase_url": "https://quietforgetools.itch.io/csv-duplicate-finder-offline-duplicate-row-detection?utm_source=github&utm_campaign=quietforgetools-catalogue"
+      "purchase_url": "https://quietforgetools.itch.io/csv-duplicate-finder-offline-duplicate-row-detection"
     },
     {
       "name": "CSV Cleanup Toolkit",
       "version": "1.0.0",
       "price_gbp": 8,
       "category": "csv",
-      "summary": "Discounted package of CSV Column Mapper and CSV Duplicate Finder as two independent CLIs. Individual tools also sold at £5 each (total £10); toolkit is not exclusive.",
+      "summary": "Discounted package of CSV Column Mapper and CSV Duplicate Finder as two independent CLIs. Individual tools also sold at \u00a35 each (total \u00a310); toolkit is not exclusive.",
       "runtime": "Python 3.10+ (stdlib)",
-      "purchase_url": "https://quietforgetools.itch.io/csv-cleanup-toolkit-offline-mapper-duplicate-finder?utm_source=github&utm_campaign=quietforgetools-catalogue"
+      "purchase_url": "https://quietforgetools.itch.io/csv-cleanup-toolkit-offline-mapper-duplicate-finder"
     },
     {
-      "name": "RFQ → Catalogue Matcher",
+      "name": "RFQ \u2192 Catalogue Matcher",
       "version": "1.0.1",
       "price_gbp": 9,
       "category": "rfq",
       "summary": "Offline RFQ catalogue matching: plain-text RFQ lines against a JSON catalogue with MATCHED / AMBIGUOUS / UNMATCHED statuses. Not OCR, PDF, ML, or ERP.",
       "runtime": "Python 3.10+ (stdlib)",
-      "purchase_url": "https://quietforgetools.itch.io/rfq-catalogue-matcher-offline-line-item-matching-tool?utm_source=github&utm_campaign=quietforgetools-catalogue"
-    },
-    {
-      "name": "RPG Maker Case-Sensitive Asset Auditor",
-      "version": "0.3.1",
-      "price_gbp": 3,
-      "price_note": "Minimum £3 (flexible / NWYW on itch); not a fixed £3 price.",
-      "category": "rpg-maker",
-      "summary": "Local Chromium HTML tool that audits case-sensitive RPG Maker MV/MZ asset references. Read-only; no auto-fix; folder picker browsers only.",
-      "runtime": "Chrome / Edge / Brave (folder picker)",
-      "purchase_url": "https://quietforgetools.itch.io/rpg-maker-case-sensitive-asset-auditor?utm_source=github&utm_campaign=quietforgetools-catalogue",
-      "price_gbp_minimum": 3,
-      "price_flexible": true
+      "purchase_url": "https://quietforgetools.itch.io/rfq-catalogue-matcher-offline-line-item-matching-tool"
     },
     {
       "name": "URL Audit Report",
@@ -68,7 +96,7 @@
       "category": "url-audit",
       "summary": "Offline redirect and broken-link analyzer for supplied source_url,target_url,status_code observations. Writes audit_summary, redirect_chains, and broken_links. Does not crawl websites or make network requests.",
       "runtime": "Python 3.10+ (stdlib)",
-      "purchase_url": "https://quietforgetools.itch.io/url-audit-report-offline-redirect-broken-link-analyzer?utm_source=github&utm_campaign=quietforgetools-catalogue"
+      "purchase_url": "https://quietforgetools.itch.io/url-audit-report-offline-redirect-broken-link-analyzer"
     }
   ]
 }
