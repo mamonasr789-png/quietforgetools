@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RPG Maker MV/MZ: Images or Audio Missing After Deployment — Check Filename Case | QuietForgeTools</title>
+  <meta name="description" content="RPG Maker MV/MZ works locally but images or audio fail after deployment? Filename case mismatches (Hero.png vs hero.png) break on case-sensitive hosts. Manual diagnosis steps for MV/MZ." />
+  <link rel="canonical" href="https://mamonasr789-png.github.io/quietforgetools/rpg-maker-case-sensitivity/" />
+  <meta name="robots" content="index,follow" />
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --border: #2d3a4d;
+      --text: #e7ecf3;
+      --muted: #9aa8bc;
+      --accent: #6db3f2;
+      --chip: #243044;
+      --warn: #f0b429;
+      --ok: #3ecf8e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      font-size: 16px;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+    header { border-bottom: 1px solid var(--border); padding: 18px 0; }
+    .brand { font-size: 0.9rem; color: var(--muted); }
+    .brand strong { color: var(--text); font-weight: 600; }
+    .brand a { color: var(--muted); }
+    .brand a:hover { color: var(--accent); }
+    .hero { padding: 36px 0 12px; }
+    h1 { font-size: 1.55rem; line-height: 1.25; margin: 0 0 12px; font-weight: 700; }
+    .lead { color: var(--muted); margin: 0 0 8px; max-width: 40em; }
+    .note {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 16px 0 0;
+      padding: 12px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .warn-box {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 0 0 14px;
+      padding: 12px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--warn);
+      border-radius: 8px;
+    }
+    .warn-box strong { color: var(--warn); }
+    section { padding: 28px 0 8px; border-top: 1px solid var(--border); }
+    h2 { font-size: 1.15rem; margin: 0 0 10px; font-weight: 650; }
+    h3 { font-size: 1.02rem; margin: 18px 0 8px; font-weight: 600; }
+    p { margin: 0 0 12px; color: var(--muted); max-width: 42em; }
+    p strong, li strong { color: var(--text); font-weight: 600; }
+    ul, ol { margin: 0 0 14px; padding-left: 1.25em; color: var(--muted); max-width: 42em; }
+    li { margin-bottom: 8px; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.88em;
+      background: var(--chip);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 6px;
+      color: var(--text);
+    }
+    .example {
+      margin: 0 0 14px;
+      padding: 12px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+    .example code { margin: 0 2px; }
+    .cta {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 8px 0 12px;
+    }
+    .cta p { margin: 0 0 10px; }
+    .cta .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      align-items: center;
+      margin-top: 4px;
+    }
+    .price {
+      display: inline-block;
+      background: var(--chip);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .runtime { font-size: 0.8rem; color: var(--muted); }
+    .btn {
+      display: inline-block;
+      padding: 7px 14px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #0a1220;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+    .btn:hover { text-decoration: none; filter: brightness(1.06); }
+    .scope-list { font-size: 0.92rem; }
+    footer {
+      margin-top: 36px;
+      padding: 24px 0 40px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="brand"><a href="https://mamonasr789-png.github.io/quietforgetools/"><strong>QuietForgeTools</strong></a> · RPG Maker troubleshooting</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap hero">
+      <h1>RPG Maker MV/MZ: Images or Audio Missing After Deployment — Check Filename Case</h1>
+      <p class="lead">
+        Your project plays fine on your computer, then after you deploy to a Linux host,
+        itch HTML5, or another web export, some images or audio fail to load.
+        A common cause is <strong>filename case</strong>: the reference and the file on disk
+        differ only in capitalization.
+      </p>
+      <p class="note">
+        Scope: <strong>RPG Maker MV and MZ</strong> asset references that use real filenames
+        on disk (images and audio). This page is a manual troubleshooting guide — it does not
+        scan or modify your project. Host behaviour varies; not every deployment is
+        case-sensitive, but many Linux and web hosts are.
+      </p>
+    </div>
+
+    <section aria-labelledby="why">
+      <div class="wrap">
+        <h2 id="why">Why it works locally but fails after deployment</h2>
+        <p>
+          Many Windows installs (and some macOS setups with default settings) treat
+          <code>Hero.png</code> and <code>hero.png</code> as the same file. The editor and
+          local playtest can resolve a reference even when the capitalization in the
+          database or event does not match the file on disk exactly.
+        </p>
+        <p>
+          Case-sensitive filesystems and many Linux or web deployments do not. If the
+          packaged game asks for <code>img/characters/Hero.png</code> but the uploaded
+          file is <code>img/characters/hero.png</code>, the load fails. The same issue
+          affects audio paths under folders such as <code>audio/bgm</code>,
+          <code>audio/bgs</code>, <code>audio/me</code>, and <code>audio/se</code>.
+        </p>
+        <div class="example">
+          <strong style="color:var(--text)">Example:</strong>
+          database/event references <code>Hero.png</code>, but the file on disk is
+          <code>hero.png</code>. Local Windows playtest may still find it. After deploy
+          to a case-sensitive host, the character graphic fails to load.
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="manual">
+      <div class="wrap">
+        <h2 id="manual">Safe manual diagnosis</h2>
+        <div class="warn-box">
+          <strong>Backup first.</strong> Copy the whole project folder (or make a zip)
+          before renaming any files or editing references. A wrong rename can break more
+          paths than you fix.
+        </div>
+
+        <h3>1. Confirm the symptom looks like a missing asset</h3>
+        <ul>
+          <li>Local playtest: asset appears.</li>
+          <li>Deployed build: missing graphic, silence, or a load/failed-to-load style error for that file.</li>
+          <li>Other assets still load — points away from a total path or export failure.</li>
+        </ul>
+
+        <h3>2. Identify one broken reference</h3>
+        <ol>
+          <li>Note which picture, character, tileset graphic, or sound fails.</li>
+          <li>In the RPG Maker database or event that uses it, read the <strong>exact</strong> name shown (including capitalization).</li>
+          <li>In your project folder, open the matching asset directory (for example <code>img/characters</code> or <code>audio/se</code>) and compare the real filename byte-for-byte, including extension case (<code>.PNG</code> vs <code>.png</code>).</li>
+        </ol>
+
+        <h3>3. Align both sides — do not fix only one</h3>
+        <p>
+          Renaming the file without updating every reference (or updating a reference
+          without renaming the file) can leave the project broken. Prefer one consistent
+          spelling everywhere: the name in the editor/data and the name on disk must match
+          exactly, including case.
+        </p>
+        <ul>
+          <li>If you rename the file, re-select or re-enter the asset in every event/database field that used the old spelling.</li>
+          <li>If you change the reference, confirm the file on disk already uses that exact spelling.</li>
+          <li>Search the project for other copies of the same basename with different capitalization (duplicate names that differ only by case can also collide on case-insensitive disks and confuse exports).</li>
+        </ul>
+
+        <h3>4. Re-export and re-test on a case-sensitive target</h3>
+        <p>
+          After aligning names, deploy again to the same kind of host you use in production
+          (Linux VPS, itch HTML5, static web host, etc.). A local Windows re-test alone may
+          not prove the fix. Where possible, also test from a case-sensitive volume or a
+          Linux container so mismatches show up before public deploy.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="limits">
+      <div class="wrap">
+        <h2 id="limits">Limits of a manual filename check</h2>
+        <p>
+          Manual comparison works well for assets you pick in the editor by fixed filename.
+          It is weaker when names are built at runtime.
+        </p>
+        <ul class="scope-list">
+          <li><strong>Plugin or script-built paths:</strong> if a plugin concatenates strings to form a filename, searching the database for a static name may miss it.</li>
+          <li><strong>Dynamically generated names:</strong> runtime-built image/audio names need a different debugging approach (logging the final path the engine requests).</li>
+          <li><strong>Not covered here as a complete project audit:</strong> CommonEvents-driven loads, arbitrary plugin parameters, fonts, movies, and Effekseer-related internals are easy to overlook by hand.</li>
+        </ul>
+        <p>
+          Hosts also differ: some CDNs or export pipelines normalize paths; others preserve
+          case strictly. Treat Linux and typical web deploys as the risk case without
+          assuming every target behaves identically.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="auto">
+      <div class="wrap">
+        <h2 id="auto">Check a whole project automatically</h2>
+        <p>
+          If you want a read-only pass over many image and audio references at once,
+          QuietForgeTools publishes an offline Chromium HTML tool for RPG Maker MV/MZ:
+        </p>
+        <div class="cta">
+          <p>
+            <strong style="color:var(--text)">RPG Maker Case-Sensitive Asset Auditor</strong> (v0.3.1) —
+            offline, read-only folder picker in Chrome, Edge, or Brave. It reports
+            <strong>CASE MISMATCH</strong>, <strong>UNRESOLVED</strong>,
+            <strong>CASE COLLISION</strong>, and <strong>SCAN INCOMPLETE</strong>.
+            It does <strong>not</strong> auto-fix or rename files. Out of scope:
+            CommonEvents, plugins, fonts, movies, Effekseer, and dynamically generated
+            or script-built filenames.
+          </p>
+          <div class="meta">
+            <span class="price">£3+</span>
+            <span class="runtime">itch.io · PWYW from £3.00 · Buy Now</span>
+            <a class="btn" href="https://quietforgetools.itch.io/rpg-maker-case-sensitive-asset-auditor">Open Case Auditor on itch.io</a>
+          </div>
+        </div>
+        <p>
+          The steps above remain usable on their own. Buying the auditor is optional —
+          use it only if a whole-project scan would save time after you understand the
+          case-mismatch failure mode.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>QuietForgeTools · free troubleshooting resource · no analytics · no cookies</p>
+      <p>
+        <a href="https://mamonasr789-png.github.io/quietforgetools/">Catalogue</a>
+        ·
+        <a href="https://quietforgetools.itch.io/rpg-maker-case-sensitive-asset-auditor">Case Auditor on itch.io</a>
+        ·
+        <a href="https://github.com/mamonasr789-png/quietforgetools">GitHub</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
