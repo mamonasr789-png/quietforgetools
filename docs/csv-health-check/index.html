@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSV Health Check — Free browser-local diagnostic | QuietForgeTools</title>
+<meta name="description" content="Free browser-local CSV health check: BOM/encoding, delimiter, duplicates, headers, widths, whitespace, empty cells. Nothing uploaded. Routes to CSV Essentials Bundle when relevant.">
+<link rel="canonical" href="https://mamonasr789-png.github.io/quietforgetools/csv-health-check/">
+<meta name="robots" content="index,follow">
+<style>
+  :root {
+    --bg: #0f1419;
+    --panel: #1a2332;
+    --border: #2d3a4d;
+    --text: #e7ecf3;
+    --muted: #8b9bb4;
+    --accent: #3d9cf0;
+    --accent-hover: #5aadff;
+    --ok: #3ecf8e;
+    --warn: #f0b429;
+    --err: #f07178;
+    --info: #6db3f2;
+    --drop: #243044;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 3rem; }
+  h1 { font-size: 1.45rem; font-weight: 650; margin: 0 0 0.35rem; letter-spacing: -0.02em; }
+  .tagline { color: var(--muted); font-size: 0.95rem; margin: 0 0 1rem; }
+  .privacy {
+    font-size: 0.9rem;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--ok);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin: 0 0 1.25rem;
+  }
+  .privacy strong { color: var(--ok); }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.35rem;
+    margin-bottom: 1rem;
+  }
+  .drop {
+    border: 2px dashed var(--border);
+    border-radius: 10px;
+    background: var(--drop);
+    padding: 2rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .drop:hover, .drop.dragover {
+    border-color: var(--accent);
+    background: #2a3a52;
+  }
+  .drop strong { color: var(--accent); }
+  .drop .hint { color: var(--muted); font-size: 0.85rem; margin-top: 0.4rem; }
+  input[type="file"] { display: none; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
+  button, .btn {
+    appearance: none;
+    border: none;
+    border-radius: 8px;
+    padding: 0.65rem 1.1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: var(--accent);
+    color: #061018;
+    text-decoration: none;
+    display: inline-block;
+  }
+  button:hover:not(:disabled), .btn:hover { background: var(--accent-hover); text-decoration: none; }
+  button:disabled { opacity: 0.4; cursor: not-allowed; }
+  button.secondary {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  button.secondary:hover:not(:disabled) { color: var(--text); border-color: var(--muted); }
+  .findings { margin-top: 1rem; }
+  .finding {
+    padding: 0.7rem 0.9rem;
+    border-radius: 8px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    margin-bottom: 0.5rem;
+    font-size: 0.92rem;
+  }
+  .finding .sev { font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; margin-right: 0.4rem; }
+  .finding.ok .sev { color: var(--ok); }
+  .finding.warn .sev { color: var(--warn); }
+  .finding.error .sev, .finding.err .sev { color: var(--err); }
+  .finding.info .sev { color: var(--info); }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.6rem;
+    margin-top: 0.75rem;
+  }
+  .stat {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.65rem 0.75rem;
+  }
+  .stat .k { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .stat .v { font-size: 1.05rem; font-weight: 650; margin-top: 0.15rem; }
+  .recs { margin-top: 1rem; }
+  .rec {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    margin-bottom: 0.55rem;
+    background: #152033;
+  }
+  .rec h3 { margin: 0 0 0.25rem; font-size: 0.98rem; }
+  .rec p { margin: 0; color: var(--muted); font-size: 0.88rem; }
+  .cta {
+    margin-top: 1.25rem;
+    padding: 1rem 1.1rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--panel);
+  }
+  .cta h2 { margin: 0 0 0.35rem; font-size: 1.05rem; }
+  .cta p { margin: 0 0 0.75rem; color: var(--muted); font-size: 0.9rem; }
+  .caveat {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 1.25rem;
+    padding: 0.85rem 1rem;
+    border-left: 3px solid var(--border);
+  }
+  footer { margin-top: 1.75rem; font-size: 0.78rem; color: var(--muted); }
+  footer a { color: var(--muted); }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.88em;
+    background: var(--bg);
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+  }
+  .hidden { display: none !important; }
+  @media (max-width: 480px) {
+    .wrap { padding: 1.25rem 1rem 2rem; }
+    h1 { font-size: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>CSV Health Check</h1>
+    <p class="tagline">Free browser-local diagnostic. Diagnose only — this page never modifies your file.</p>
+    <p class="privacy"><strong>Your CSV stays in your browser. Nothing is uploaded.</strong> No analytics, cookies, tracking, or external APIs.</p>
+
+    <div class="panel">
+      <div id="drop" class="drop" role="button" tabindex="0" aria-label="Choose or drop a CSV file">
+        <div><strong>Choose a CSV</strong> or drop it here</div>
+        <div class="hint">.csv · processed entirely in your browser · max ~8&nbsp;MB</div>
+      </div>
+      <input type="file" id="file" accept=".csv,text/csv">
+      <div class="actions">
+        <button type="button" id="sampleBtn" class="secondary">Load sample</button>
+        <button type="button" id="clearBtn" class="secondary" disabled>Clear</button>
+      </div>
+      <div id="errorBox" class="finding error hidden" style="margin-top:1rem"></div>
+      <div id="results" class="hidden">
+        <div class="stats-grid" id="statsGrid"></div>
+        <div class="findings" id="findings"></div>
+        <div class="recs" id="recs"></div>
+        <div class="cta" id="bundleCta">
+          <h2>Need repair / cleanup / export workflow?</h2>
+          <p>This free tool only diagnoses. The CSV Essentials Bundle (£12) includes Duplicate Finder, Column Mapper, and Excel-Ready (BOM/encoding) as offline utilities — use them when a finding above is relevant.</p>
+          <a class="btn" id="bundleLink" href="https://quietforgetools.itch.io/csv-essentials-toolkit-3-offline-utilities" target="_blank" rel="noopener noreferrer">Get CSV Essentials Bundle — £12</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="caveat">
+      <strong>Limitations:</strong> Diagnose only (no repair/export). UTF-8 focused; legacy encodings are reported but not converted here.
+      Quoted fields with commas/newlines are supported. Very large files may be rejected gracefully (~8&nbsp;MB).
+      Recommendations appear only when relevant findings are present.
+    </div>
+
+    <footer>
+      QuietForgeTools · CSV Health Check (free) ·
+      <a href="https://mamonasr789-png.github.io/quietforgetools/">catalogue</a>
+      · 100% offline · no uploads · no tracking
+    </footer>
+  </div>
+
+<script>
+/**
+ * CSV Health Check — browser-local diagnostic core (diagnose only; no repair/export).
+ * Inspired by Excel-Ready BOM detection and paid Duplicate Finder / Column Mapper ideas.
+ * Free tool must NOT modify files or implement paid repair features.
+ */
+(function (root, factory) {
+  if (typeof module === "object" && module.exports) {
+    module.exports = factory();
+  } else {
+    root.CsvHealthCheck = factory();
+  }
+})(typeof self !== "undefined" ? self : this, function () {
+  "use strict";
+
+  var MAX_BYTES = 8 * 1024 * 1024; // 8 MiB soft limit — fail gracefully above
+
+  function hasUtf8Bom(bytes) {
+    return (
+      bytes &&
+      bytes.length >= 3 &&
+      bytes[0] === 0xef &&
+      bytes[1] === 0xbb &&
+      bytes[2] === 0xbf
+    );
+  }
+
+  function isValidUtf8(bytes) {
+    try {
+      if (typeof TextDecoder !== "undefined") {
+        new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+        return true;
+      }
+      // Node Buffer fallback
+      if (typeof Buffer !== "undefined") {
+        Buffer.from(bytes).toString("utf8");
+        // Buffer doesn't throw on invalid; check replacement
+        var s = Buffer.from(bytes).toString("utf8");
+        return !s.includes("\uFFFD") || Buffer.from(s, "utf8").equals(Buffer.from(bytes));
+      }
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function bytesToText(bytes) {
+    var offset = hasUtf8Bom(bytes) ? 3 : 0;
+    var slice = bytes.subarray ? bytes.subarray(offset) : bytes.slice(offset);
+    if (typeof TextDecoder !== "undefined") {
+      return new TextDecoder("utf-8", { fatal: false }).decode(slice);
+    }
+    return Buffer.from(slice).toString("utf8");
+  }
+
+  function detectDelimiter(sample) {
+    // Count candidates outside quotes on first non-empty line(s)
+    var lines = sample.split(/\r\n|\n|\r/).filter(function (l) {
+      return l.length > 0;
+    });
+    if (lines.length === 0) return { delimiter: ",", name: "comma", confidence: "low" };
+
+    var candidates = [
+      { ch: ",", name: "comma" },
+      { ch: ";", name: "semicolon" },
+      { ch: "\t", name: "tab" },
+      { ch: "|", name: "pipe" },
+    ];
+
+    function countOutsideQuotes(line, ch) {
+      var n = 0;
+      var inQ = false;
+      for (var i = 0; i < line.length; i++) {
+        var c = line[i];
+        if (c === '"') {
+          if (inQ && line[i + 1] === '"') {
+            i++;
+            continue;
+          }
+          inQ = !inQ;
+          continue;
+        }
+        if (!inQ && c === ch) n++;
+      }
+      return n;
+    }
+
+    var best = null;
+    for (var c = 0; c < candidates.length; c++) {
+      var cand = candidates[c];
+      var counts = [];
+      var limit = Math.min(5, lines.length);
+      for (var li = 0; li < limit; li++) {
+        counts.push(countOutsideQuotes(lines[li], cand.ch));
+      }
+      var avg = counts.reduce(function (a, b) {
+        return a + b;
+      }, 0) / counts.length;
+      var consistent = counts.every(function (x) {
+        return x === counts[0];
+      });
+      var score = avg * (consistent ? 2 : 1);
+      if (!best || score > best.score) {
+        best = { delimiter: cand.ch, name: cand.name, score: score, avg: avg, consistent: consistent };
+      }
+    }
+
+    if (!best || best.avg < 0.5) {
+      return { delimiter: ",", name: "comma", confidence: "low" };
+    }
+    return {
+      delimiter: best.delimiter,
+      name: best.name,
+      confidence: best.consistent && best.avg >= 1 ? "high" : "medium",
+    };
+  }
+
+  /**
+   * Minimal RFC4180-ish parser supporting quoted commas and quoted newlines.
+   * Returns { headers, rows, parseWarnings }
+   */
+  function parseCsv(text, delimiter) {
+    var rows = [];
+    var field = "";
+    var row = [];
+    var inQ = false;
+    var i = 0;
+    var warnings = [];
+
+    function pushField() {
+      row.push(field);
+      field = "";
+    }
+    function pushRow() {
+      // Tolerate trailing empty line after final newline
+      if (row.length === 1 && row[0] === "" && rows.length > 0) {
+        row = [];
+        return;
+      }
+      rows.push(row);
+      row = [];
+    }
+
+    while (i < text.length) {
+      var c = text[i];
+      if (inQ) {
+        if (c === '"') {
+          if (text[i + 1] === '"') {
+            field += '"';
+            i += 2;
+            continue;
+          }
+          inQ = false;
+          i++;
+          continue;
+        }
+        field += c;
+        i++;
+        continue;
+      }
+      if (c === '"') {
+        inQ = true;
+        i++;
+        continue;
+      }
+      if (c === delimiter) {
+        pushField();
+        i++;
+        continue;
+      }
+      if (c === "\r") {
+        pushField();
+        pushRow();
+        if (text[i + 1] === "\n") i++;
+        i++;
+        continue;
+      }
+      if (c === "\n") {
+        pushField();
+        pushRow();
+        i++;
+        continue;
+      }
+      field += c;
+      i++;
+    }
+    // last field/row
+    if (field.length > 0 || row.length > 0 || (text.length > 0 && !text.endsWith("\n") && !text.endsWith("\r"))) {
+      pushField();
+      pushRow();
+    } else if (field.length === 0 && row.length > 0) {
+      pushField();
+      pushRow();
+    }
+
+    if (inQ) warnings.push("Unterminated quoted field (malformed CSV)");
+
+    if (rows.length === 0) {
+      return { headers: [], rows: [], parseWarnings: warnings, dataRows: [] };
+    }
+
+    var headers = rows[0];
+    var dataRows = rows.slice(1);
+    return { headers: headers, rows: rows, dataRows: dataRows, parseWarnings: warnings };
+  }
+
+  function analyzeParsed(headers, dataRows) {
+    var colCount = headers.length;
+    var rowCount = dataRows.length;
+
+    // Duplicate headers
+    var headerCounts = {};
+    var duplicateHeaders = [];
+    for (var h = 0; h < headers.length; h++) {
+      var name = headers[h];
+      var key = name === null || name === undefined ? "" : String(name);
+      headerCounts[key] = (headerCounts[key] || 0) + 1;
+    }
+    Object.keys(headerCounts).forEach(function (k) {
+      if (headerCounts[k] > 1) {
+        duplicateHeaders.push({ name: k === "" ? "(blank)" : k, count: headerCounts[k] });
+      }
+    });
+
+    // Blank / unnamed columns
+    var blankColumns = [];
+    for (var bi = 0; bi < headers.length; bi++) {
+      var hn = String(headers[bi] == null ? "" : headers[bi]).trim();
+      if (hn === "") blankColumns.push(bi);
+    }
+
+    // Inconsistent row widths
+    var unevenRows = 0;
+    var widthCounts = {};
+    for (var r = 0; r < dataRows.length; r++) {
+      var w = dataRows[r].length;
+      widthCounts[w] = (widthCounts[w] || 0) + 1;
+      if (w !== colCount) unevenRows++;
+    }
+
+    // Duplicate rows (exact join of fields)
+    var seen = Object.create(null);
+    var duplicateRowCount = 0; // extra copies beyond first
+    var uniqueDuplicateGroups = 0;
+    for (var dr = 0; dr < dataRows.length; dr++) {
+      var sig = dataRows[dr].join("\u0001");
+      if (seen[sig]) {
+        if (seen[sig] === 1) uniqueDuplicateGroups++;
+        seen[sig]++;
+        duplicateRowCount++;
+      } else {
+        seen[sig] = 1;
+      }
+    }
+
+    // Whitespace issues on headers and cells (leading/trailing, non-empty)
+    var whitespaceIssues = 0;
+    function hasWs(s) {
+      if (s == null) return false;
+      var str = String(s);
+      if (str.length === 0) return false;
+      return str !== str.trim() || /^\s|\s$/.test(str);
+    }
+    for (var wh = 0; wh < headers.length; wh++) {
+      if (hasWs(headers[wh])) whitespaceIssues++;
+    }
+    for (var wr = 0; wr < dataRows.length; wr++) {
+      for (var wc = 0; wc < dataRows[wr].length; wc++) {
+        if (hasWs(dataRows[wr][wc])) whitespaceIssues++;
+      }
+    }
+
+    // Empty cells
+    var emptyCells = 0;
+    var totalCells = 0;
+    for (var er = 0; er < dataRows.length; er++) {
+      for (var ec = 0; ec < Math.max(colCount, dataRows[er].length); ec++) {
+        totalCells++;
+        var cell = dataRows[er][ec];
+        if (cell == null || String(cell).trim() === "") emptyCells++;
+      }
+    }
+    // Also count shortfall cells for uneven rows already included via Math.max
+
+    var emptyRatio = totalCells === 0 ? 0 : emptyCells / totalCells;
+
+    return {
+      columnCount: colCount,
+      rowCount: rowCount, // data rows only
+      totalRowsIncludingHeader: rowCount + (headers.length ? 1 : 0),
+      duplicateHeaders: duplicateHeaders,
+      duplicateHeaderCount: duplicateHeaders.length,
+      blankColumns: blankColumns,
+      blankColumnCount: blankColumns.length,
+      unevenRowCount: unevenRows,
+      inconsistentWidths: unevenRows > 0,
+      duplicateRowCount: duplicateRowCount,
+      uniqueDuplicateGroups: uniqueDuplicateGroups,
+      whitespaceIssueCount: whitespaceIssues,
+      emptyCellCount: emptyCells,
+      totalDataCells: totalCells,
+      emptyCellRatio: emptyRatio,
+      widthHistogram: widthCounts,
+    };
+  }
+
+  /**
+   * Main entry: diagnose raw bytes (Uint8Array or Buffer or number[]).
+   */
+  function diagnose(inputBytes, options) {
+    options = options || {};
+    var maxBytes = options.maxBytes != null ? options.maxBytes : MAX_BYTES;
+
+    var bytes;
+    if (!inputBytes) {
+      bytes = new Uint8Array(0);
+    } else if (inputBytes instanceof Uint8Array) {
+      bytes = inputBytes;
+    } else if (typeof Buffer !== "undefined" && Buffer.isBuffer(inputBytes)) {
+      bytes = new Uint8Array(inputBytes);
+    } else if (Array.isArray(inputBytes)) {
+      bytes = new Uint8Array(inputBytes);
+    } else if (inputBytes.buffer) {
+      bytes = new Uint8Array(inputBytes.buffer, inputBytes.byteOffset || 0, inputBytes.byteLength || inputBytes.length);
+    } else {
+      bytes = new Uint8Array(inputBytes);
+    }
+
+    var result = {
+      ok: false,
+      tooLarge: false,
+      empty: false,
+      byteLength: bytes.length,
+      bom: { present: false, kind: "none" },
+      encoding: { utf8Valid: false, label: "unknown" },
+      delimiter: { delimiter: ",", name: "comma", confidence: "low" },
+      parseWarnings: [],
+      stats: null,
+      findings: [],
+      recommendations: [],
+      error: null,
+    };
+
+    if (bytes.length === 0) {
+      result.empty = true;
+      result.error = "Empty file — nothing to diagnose.";
+      result.findings.push({ id: "empty", severity: "error", message: "File is empty." });
+      return result;
+    }
+
+    if (bytes.length > maxBytes) {
+      result.tooLarge = true;
+      result.error =
+        "File is too large for in-browser diagnosis (" +
+        bytes.length +
+        " bytes; limit " +
+        maxBytes +
+        "). Try a smaller sample.";
+      result.findings.push({
+        id: "too-large",
+        severity: "error",
+        message: result.error,
+      });
+      return result;
+    }
+
+    var bomPresent = hasUtf8Bom(bytes);
+    result.bom = {
+      present: bomPresent,
+      kind: bomPresent ? "UTF-8 BOM (EF BB BF)" : "none",
+    };
+
+    var body = bomPresent ? bytes.subarray(3) : bytes;
+    var utf8Ok = isValidUtf8(body);
+    result.encoding = {
+      utf8Valid: utf8Ok,
+      label: bomPresent
+        ? utf8Ok
+          ? "UTF-8 with BOM"
+          : "BOM present but body not valid UTF-8"
+        : utf8Ok
+          ? "UTF-8 without BOM"
+          : "Not valid UTF-8 (unsupported / legacy encoding?)",
+    };
+
+    if (!utf8Ok) {
+      result.findings.push({
+        id: "encoding",
+        severity: "warn",
+        message: result.encoding.label,
+      });
+      result.recommendations.push({
+        id: "excel-ready",
+        reason: "encoding/BOM",
+        product: "Excel-Ready / BOM Fixer",
+        note: "Bundle includes Excel-Ready for UTF-8 BOM / encoding prep. This free tool does not rewrite your file.",
+      });
+      // Still attempt decode with replacement for structural stats if possible
+    } else if (!bomPresent) {
+      result.findings.push({
+        id: "bom-missing",
+        severity: "info",
+        message: "UTF-8 without BOM — Excel may mis-read special characters on double-click open.",
+      });
+      result.recommendations.push({
+        id: "excel-ready",
+        reason: "BOM missing",
+        product: "Excel-Ready / BOM Fixer",
+        note: "Excel-Ready can prepend a single UTF-8 BOM for more reliable Excel open.",
+      });
+    } else {
+      result.findings.push({
+        id: "bom-ok",
+        severity: "ok",
+        message: "UTF-8 BOM present.",
+      });
+    }
+
+    var text = bytesToText(bytes);
+    if (text.length === 0 && bytes.length > 0 && bomPresent && bytes.length === 3) {
+      result.empty = true;
+      result.error = "File contains only a BOM — no CSV content.";
+      result.findings.push({ id: "empty-bom", severity: "error", message: result.error });
+      result.ok = true; // diagnosis completed
+      return result;
+    }
+
+    var delim = detectDelimiter(text);
+    result.delimiter = delim;
+
+    var parsed = parseCsv(text, delim.delimiter);
+    result.parseWarnings = parsed.parseWarnings || [];
+    if (result.parseWarnings.length) {
+      result.findings.push({
+        id: "malformed",
+        severity: "warn",
+        message: result.parseWarnings.join("; "),
+      });
+    }
+
+    var stats = analyzeParsed(parsed.headers, parsed.dataRows);
+    result.stats = stats;
+
+    result.findings.push({
+      id: "shape",
+      severity: "ok",
+      message:
+        "Delimiter: " +
+        delim.name +
+        " · Data rows: " +
+        stats.rowCount +
+        " · Columns: " +
+        stats.columnCount,
+    });
+
+    if (stats.duplicateHeaderCount > 0) {
+      result.findings.push({
+        id: "dup-headers",
+        severity: "warn",
+        message:
+          "Duplicate header names: " +
+          stats.duplicateHeaders
+            .map(function (d) {
+              return d.name + " ×" + d.count;
+            })
+            .join(", "),
+      });
+      result.recommendations.push({
+        id: "column-mapper",
+        reason: "duplicate headers",
+        product: "Column Mapper",
+        note: "Column Mapper helps map / rename schema columns for import workflows.",
+      });
+    }
+
+    if (stats.blankColumnCount > 0) {
+      result.findings.push({
+        id: "blank-headers",
+        severity: "warn",
+        message: "Blank/unnamed column headers: " + stats.blankColumnCount,
+      });
+      if (!result.recommendations.some(function (r) { return r.id === "column-mapper"; })) {
+        result.recommendations.push({
+          id: "column-mapper",
+          reason: "blank/unnamed columns",
+          product: "Column Mapper",
+          note: "Column Mapper helps tidy header/schema issues before import.",
+        });
+      }
+    }
+
+    if (stats.inconsistentWidths) {
+      result.findings.push({
+        id: "uneven-widths",
+        severity: "warn",
+        message:
+          "Inconsistent row widths: " +
+          stats.unevenRowCount +
+          " data row(s) differ from header column count (" +
+          stats.columnCount +
+          ").",
+      });
+      if (!result.recommendations.some(function (r) { return r.id === "column-mapper"; })) {
+        result.recommendations.push({
+          id: "column-mapper",
+          reason: "inconsistent widths / schema",
+          product: "Column Mapper",
+          note: "Schema/width issues often need mapping or cleanup before reliable import.",
+        });
+      }
+    }
+
+    if (stats.duplicateRowCount > 0) {
+      result.findings.push({
+        id: "dup-rows",
+        severity: "warn",
+        message:
+          "Exact duplicate data rows: " +
+          stats.duplicateRowCount +
+          " extra copy(ies) across " +
+          stats.uniqueDuplicateGroups +
+          " group(s).",
+      });
+      result.recommendations.push({
+        id: "duplicate-finder",
+        reason: "duplicate rows",
+        product: "Duplicate Finder",
+        note: "Duplicate Finder detects and exports duplicate/unique row sets offline.",
+      });
+    }
+
+    if (stats.whitespaceIssueCount > 0) {
+      result.findings.push({
+        id: "whitespace",
+        severity: "info",
+        message:
+          "Suspicious leading/trailing whitespace in " +
+          stats.whitespaceIssueCount +
+          " header/cell value(s).",
+      });
+    }
+
+    if (stats.totalDataCells > 0) {
+      result.findings.push({
+        id: "empty-cells",
+        severity: stats.emptyCellRatio > 0.25 ? "info" : "ok",
+        message:
+          "Empty cells: " +
+          stats.emptyCellCount +
+          " / " +
+          stats.totalDataCells +
+          " (" +
+          (stats.emptyCellRatio * 100).toFixed(1) +
+          "%).",
+      });
+    }
+
+    result.ok = true;
+    return result;
+  }
+
+  // Diagnostics checklist ids (for reporting)
+  var DIAGNOSTIC_IDS = [
+    "encoding-bom",
+    "delimiter",
+    "row-column-counts",
+    "duplicate-rows",
+    "duplicate-headers",
+    "blank-unnamed-columns",
+    "inconsistent-widths",
+    "whitespace",
+    "empty-cells",
+  ];
+
+  return {
+    MAX_BYTES: MAX_BYTES,
+    DIAGNOSTIC_IDS: DIAGNOSTIC_IDS,
+    hasUtf8Bom: hasUtf8Bom,
+    isValidUtf8: isValidUtf8,
+    bytesToText: bytesToText,
+    detectDelimiter: detectDelimiter,
+    parseCsv: parseCsv,
+    analyzeParsed: analyzeParsed,
+    diagnose: diagnose,
+  };
+});
+
+</script>
+<script>
+(function () {
+  "use strict";
+  var BUNDLE_URL = "https://quietforgetools.itch.io/csv-essentials-toolkit-3-offline-utilities";
+  var drop = document.getElementById("drop");
+  var fileInput = document.getElementById("file");
+  var clearBtn = document.getElementById("clearBtn");
+  var sampleBtn = document.getElementById("sampleBtn");
+  var results = document.getElementById("results");
+  var statsGrid = document.getElementById("statsGrid");
+  var findingsEl = document.getElementById("findings");
+  var recsEl = document.getElementById("recs");
+  var errorBox = document.getElementById("errorBox");
+  var bundleLink = document.getElementById("bundleLink");
+  bundleLink.href = BUNDLE_URL;
+
+  var SAMPLE =
+    "name,email,city\n" +
+    "Alice,a@example.com,London\n" +
+    "Bob, b@example.com ,Manchester\n" +
+    "Alice,a@example.com,London\n";
+
+  function formatBytes(n) {
+    if (n < 1024) return n + " B";
+    if (n < 1024 * 1024) return (n / 1024).toFixed(1) + " KB";
+    return (n / (1024 * 1024)).toFixed(2) + " MB";
+  }
+
+  function clearAll() {
+    fileInput.value = "";
+    results.classList.add("hidden");
+    errorBox.classList.add("hidden");
+    clearBtn.disabled = true;
+    statsGrid.innerHTML = "";
+    findingsEl.innerHTML = "";
+    recsEl.innerHTML = "";
+  }
+
+  function showError(msg) {
+    errorBox.classList.remove("hidden");
+    errorBox.innerHTML = '<span class="sev">Error</span>' + msg;
+    results.classList.add("hidden");
+    clearBtn.disabled = false;
+  }
+
+  function statCard(k, v) {
+    return '<div class="stat"><div class="k">' + k + '</div><div class="v">' + v + "</div></div>";
+  }
+
+  function render(report, name, size) {
+    errorBox.classList.add("hidden");
+    results.classList.remove("hidden");
+    clearBtn.disabled = false;
+
+    if (report.tooLarge || (report.empty && !report.stats)) {
+      showError(report.error || "Cannot diagnose this file.");
+      // still show findings if any
+      if (report.findings && report.findings.length) {
+        results.classList.remove("hidden");
+        statsGrid.innerHTML = statCard("File", name || "—") + statCard("Size", formatBytes(size || 0));
+        findingsEl.innerHTML = report.findings
+          .map(function (f) {
+            return (
+              '<div class="finding ' +
+              (f.severity || "info") +
+              '"><span class="sev">' +
+              (f.severity || "info") +
+              "</span>" +
+              f.message +
+              "</div>"
+            );
+          })
+          .join("");
+        recsEl.innerHTML = "";
+      }
+      return;
+    }
+
+    var s = report.stats || {};
+    statsGrid.innerHTML = [
+      statCard("File", escapeHtml(name || "—")),
+      statCard("Size", formatBytes(size || report.byteLength || 0)),
+      statCard("BOM", report.bom.present ? "Yes" : "No"),
+      statCard("Encoding", escapeHtml(report.encoding.label)),
+      statCard("Delimiter", escapeHtml(report.delimiter.name)),
+      statCard("Data rows", String(s.rowCount != null ? s.rowCount : "—")),
+      statCard("Columns", String(s.columnCount != null ? s.columnCount : "—")),
+      statCard("Dup rows", String(s.duplicateRowCount != null ? s.duplicateRowCount : "—")),
+      statCard("Dup headers", String(s.duplicateHeaderCount != null ? s.duplicateHeaderCount : "—")),
+      statCard("Blank cols", String(s.blankColumnCount != null ? s.blankColumnCount : "—")),
+      statCard("Uneven rows", String(s.unevenRowCount != null ? s.unevenRowCount : "—")),
+      statCard("Whitespace", String(s.whitespaceIssueCount != null ? s.whitespaceIssueCount : "—")),
+      statCard(
+        "Empty cells",
+        s.emptyCellCount != null
+          ? s.emptyCellCount + " (" + ((s.emptyCellRatio || 0) * 100).toFixed(1) + "%)"
+          : "—"
+      ),
+    ].join("");
+
+    findingsEl.innerHTML = (report.findings || [])
+      .map(function (f) {
+        return (
+          '<div class="finding ' +
+          (f.severity || "info") +
+          '"><span class="sev">' +
+          (f.severity || "info") +
+          "</span>" +
+          escapeHtml(f.message) +
+          "</div>"
+        );
+      })
+      .join("");
+
+    var recs = report.recommendations || [];
+    if (recs.length === 0) {
+      recsEl.innerHTML =
+        '<p style="color:var(--muted);font-size:0.9rem;margin:0.75rem 0 0">No specific paid-tool recommendation for this file. Bundle CTA below if you want the full CSV Essentials set.</p>';
+    } else {
+      recsEl.innerHTML =
+        '<h2 style="font-size:1rem;margin:1rem 0 0.5rem">Relevant paid components</h2>' +
+        recs
+          .map(function (r) {
+            return (
+              '<div class="rec"><h3>' +
+              escapeHtml(r.product) +
+              "</h3><p>" +
+              escapeHtml(r.note) +
+              " <em>(" +
+              escapeHtml(r.reason) +
+              ")</em></p></div>"
+            );
+          })
+          .join("");
+    }
+  }
+
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function diagnoseBytes(bytes, name) {
+    var report = CsvHealthCheck.diagnose(bytes);
+    render(report, name, bytes.length);
+  }
+
+  function loadFile(file) {
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      var buf = new Uint8Array(reader.result);
+      diagnoseBytes(buf, file.name || "data.csv");
+    };
+    reader.onerror = function () {
+      showError("The browser failed to read this file.");
+    };
+    reader.readAsArrayBuffer(file);
+  }
+
+  drop.addEventListener("click", function () { fileInput.click(); });
+  drop.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      fileInput.click();
+    }
+  });
+  fileInput.addEventListener("change", function () {
+    if (fileInput.files && fileInput.files[0]) loadFile(fileInput.files[0]);
+  });
+  drop.addEventListener("dragover", function (e) {
+    e.preventDefault();
+    drop.classList.add("dragover");
+  });
+  drop.addEventListener("dragleave", function () {
+    drop.classList.remove("dragover");
+  });
+  drop.addEventListener("drop", function (e) {
+    e.preventDefault();
+    drop.classList.remove("dragover");
+    var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f) loadFile(f);
+  });
+  clearBtn.addEventListener("click", clearAll);
+  sampleBtn.addEventListener("click", function () {
+    var enc = new TextEncoder().encode(SAMPLE);
+    diagnoseBytes(enc, "sample.csv");
+  });
+})();
+</script>
+</body>
+</html>
