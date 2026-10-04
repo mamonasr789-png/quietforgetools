@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WordPress Enquiry Path Checklist</title>
+  <meta name="description" content="Offline WordPress enquiry path checklist. Manually mark form, email, mobile, and delivery checks. Get a copyable diagnostic summary. No uploads, no accounts." />
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="demo-banner" class="demo-banner" hidden role="status"></div>
+
+  <header>
+    <div class="wrap">
+      <div class="brand" id="brand-block">
+        <img id="brand-logo" class="brand-logo" alt="" hidden />
+        <a id="brand-link" href="#"><span id="brand-name">YOUR BUSINESS NAME</span></a>
+        <span class="brand-sep"> · </span>
+        <span class="brand-tag">Diagnostic checklist</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap hero">
+      <div class="free-chip" id="chip-text">Manual checklist · runs in your browser · nothing uploaded</div>
+      <h1 id="page-heading">WordPress Enquiry Path Checklist</h1>
+      <p class="lead" id="page-intro">
+        A practical checklist for when a WordPress contact, enquiry, or quote form
+        seems broken. You mark each item yourself — this tool does
+        <strong>not</strong> scan or inspect your website automatically.
+      </p>
+      <div class="privacy" role="note">
+        <strong>Privacy:</strong> All answers stay in this browser tab.
+        Nothing is sent to a server, stored in cookies, or shared with analytics.
+        Closing or refreshing the page clears your marks (no localStorage).
+      </div>
+    </div>
+
+    <section id="checklist" aria-labelledby="checklist-heading">
+      <div class="wrap">
+        <h2 id="checklist-heading">Checklist</h2>
+        <p class="section-lead">Mark each item: Pass, Fail, Not sure, or N/A. Then generate your summary below.</p>
+        <form id="checklist-form" novalidate>
+          <ol class="checks" id="checks-list"></ol>
+        </form>
+      </div>
+    </section>
+
+    <section id="actions" aria-labelledby="actions-heading">
+      <div class="wrap">
+        <h2 id="actions-heading">Summary</h2>
+        <div class="action-row">
+          <button type="button" class="btn btn-primary" id="btn-generate">Generate diagnostic report</button>
+          <button type="button" class="btn btn-ghost" id="btn-copy" disabled>Copy report</button>
+          <button type="button" class="btn btn-ghost" id="btn-reset">Reset all</button>
+        </div>
+        <p class="copy-status" id="copy-status" aria-live="polite"></p>
+
+        <div id="results" class="results" hidden>
+          <div class="result-block">
+            <h3>Failed checks</h3>
+            <ul id="failed-list"></ul>
+            <p class="empty-note" id="failed-empty" hidden>None marked Fail.</p>
+          </div>
+          <div class="result-block">
+            <h3>Uncertain checks</h3>
+            <ul id="unsure-list"></ul>
+            <p class="empty-note" id="unsure-empty" hidden>None marked Not sure.</p>
+          </div>
+          <div class="result-block">
+            <h3>Recommended next investigation</h3>
+            <p id="recommendation" class="recommendation"></p>
+          </div>
+          <div class="result-block">
+            <h3>Full report</h3>
+            <pre id="report-text" class="report" tabindex="0"></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact-cta" aria-labelledby="cta-heading">
+      <div class="wrap">
+        <h2 id="cta-heading">Need help fixing it?</h2>
+        <p class="section-lead" id="cta-lead">
+          The checklist above is complete on its own. If you want hands-on help with your WordPress enquiry path, use the contact option below.
+        </p>
+        <a class="btn btn-primary btn-cta" id="cta-button" href="https://example.com/contact">Contact YOUR BUSINESS NAME</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p id="footer-line"><span id="footer-name">YOUR BUSINESS NAME</span> · WordPress Enquiry Path Checklist · offline diagnostic</p>
+      <p class="foot-note" id="footer-note">This page never claims automatic website inspection. You mark each check yourself.</p>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
