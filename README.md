@@ -31,7 +31,7 @@ Browser utilities that process data in your browser do so **locally on your mach
 | **CSV Column Mapper** | Offline Python CLI for CSV column / schema mapping via an editable JSON map (rename and reorder columns). | £5 | Python 3.10+ stdlib (offline local) | [Buy on itch.io](https://quietforgetools.itch.io/csv-column-mapper-offline-schema-mapping-tool) |
 | **CSV Duplicate Finder** | Offline Python CLI that finds duplicate CSV rows by one column or a composite key; source file never modified. | £5 | Python 3.10+ stdlib (offline local) | [Buy on itch.io](https://quietforgetools.itch.io/csv-duplicate-finder-offline-duplicate-row-detection) |
 | **CSV Cleanup Toolkit** | Discounted package of CSV Column Mapper and CSV Duplicate Finder as two independent offline CLIs. | £8 | Python 3.10+ stdlib (offline local) | [Buy on itch.io](https://quietforgetools.itch.io/csv-cleanup-toolkit-offline-mapper-duplicate-finder) |
-| **RFQ → Catalogue Matcher** | Offline Python CLI that matches plain-text RFQ line items to a JSON catalogue with MATCHED / AMBIGUOUS / UNMATCHED statuses. | £9 | Python 3.10+ stdlib (offline local) | [Buy on itch.io](https://quietforgetools.itch.io/rfq-catalogue-matcher-offline-line-item-matching-tool) |
+| **RFQ → Catalogue Matcher** | Offline Python CLI that matches plain-text RFQ line items to a JSON catalogue with MATCHED / AMBIGUOUS / UNMATCHED statuses. | £7 | Python 3.10+ stdlib (offline local) | [Buy on itch.io](https://quietforgetools.itch.io/rfq-catalogue-matcher-offline-line-item-matching-tool) |
 | **URL Audit Report** | Offline Python CLI that analyses supplied URL/status observations for redirect chains and broken-link signals (no crawl, no network). | £7 | Python 3.10+ stdlib (offline local) | [Buy on itch.io](https://quietforgetools.itch.io/url-audit-report-offline-redirect-broken-link-analyzer) |
 
 Related product-specific documentation repos (unchanged by this catalogue):
@@ -174,7 +174,7 @@ Bundle £8 vs £5 + £5 = £10 separately. Tools remain independent CLIs either 
 
 ---
 
-### 5. RFQ → Catalogue Matcher v1.0.1 — £9
+### 5. RFQ → Catalogue Matcher v1.0.1 — £7
 
 **Audience:** Suppliers and trade counters who need RFQ catalogue matching — turning RFQ text into quote-ready line statuses by hand.
 

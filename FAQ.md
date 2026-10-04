@@ -72,7 +72,7 @@ Public itch.io pages (same catalogue UTM as the README):
 | CSV Column Mapper | £5 | [itch.io](https://quietforgetools.itch.io/csv-column-mapper-offline-schema-mapping-tool?utm_source=github&utm_campaign=quietforgetools-catalogue) |
 | CSV Duplicate Finder | £5 | [itch.io](https://quietforgetools.itch.io/csv-duplicate-finder-offline-duplicate-row-detection?utm_source=github&utm_campaign=quietforgetools-catalogue) |
 | CSV Cleanup Toolkit | £8 | [itch.io](https://quietforgetools.itch.io/csv-cleanup-toolkit-offline-mapper-duplicate-finder?utm_source=github&utm_campaign=quietforgetools-catalogue) |
-| RFQ → Catalogue Matcher | £9 | [itch.io](https://quietforgetools.itch.io/rfq-catalogue-matcher-offline-line-item-matching-tool?utm_source=github&utm_campaign=quietforgetools-catalogue) |
+| RFQ → Catalogue Matcher | £7 | [itch.io](https://quietforgetools.itch.io/rfq-catalogue-matcher-offline-line-item-matching-tool?utm_source=github&utm_campaign=quietforgetools-catalogue) |
 | RPG Maker Case-Sensitive Asset Auditor | £3+ | [itch.io](https://quietforgetools.itch.io/rpg-maker-case-sensitive-asset-auditor?utm_source=github&utm_campaign=quietforgetools-catalogue) |
 | URL Audit Report | £7 | [itch.io](https://quietforgetools.itch.io/url-audit-report-offline-redirect-broken-link-analyzer?utm_source=github&utm_campaign=quietforgetools-catalogue) |
 

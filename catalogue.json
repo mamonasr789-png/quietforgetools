@@ -90,7 +90,7 @@
     {
       "name": "RFQ \u2192 Catalogue Matcher",
       "version": "1.0.1",
-      "price_gbp": 9,
+      "price_gbp": 7,
       "category": "rfq",
       "summary": "Offline RFQ catalogue matching: plain-text RFQ lines against a JSON catalogue with MATCHED / AMBIGUOUS / UNMATCHED statuses. Not OCR, PDF, ML, or ERP.",
       "runtime": "Python 3.10+ (stdlib)",
