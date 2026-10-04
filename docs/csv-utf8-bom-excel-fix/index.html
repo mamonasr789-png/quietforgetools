@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSV UTF-8 &amp; BOM Problems in Excel — How to Diagnose and Fix Them | QuietForgeTools</title>
+  <meta name="description" content="CSV looks garbled in Excel? Learn UTF-8 vs UTF-8 BOM, mojibake, encoding vs delimiter problems, safe manual diagnosis and fixes, and when an offline Excel-Ready tool helps." />
+  <link rel="canonical" href="https://mamonasr789-png.github.io/quietforgetools/csv-utf8-bom-excel-fix/" />
+  <meta name="robots" content="index,follow" />
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --border: #2d3a4d;
+      --text: #e7ecf3;
+      --muted: #9aa8bc;
+      --accent: #6db3f2;
+      --chip: #243044;
+      --warn: #f0b429;
+      --ok: #3ecf8e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      font-size: 16px;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+    header { border-bottom: 1px solid var(--border); padding: 18px 0; }
+    .brand { font-size: 0.9rem; color: var(--muted); }
+    .brand strong { color: var(--text); font-weight: 600; }
+    .brand a { color: var(--muted); }
+    .brand a:hover { color: var(--accent); }
+    .hero { padding: 36px 0 12px; }
+    h1 { font-size: 1.55rem; line-height: 1.25; margin: 0 0 12px; font-weight: 700; }
+    .lead { color: var(--muted); margin: 0 0 8px; max-width: 40em; }
+    .note {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 16px 0 0;
+      padding: 12px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .warn-box {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 0 0 14px;
+      padding: 12px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--warn);
+      border-radius: 8px;
+    }
+    .warn-box strong { color: var(--warn); }
+    section { padding: 28px 0 8px; border-top: 1px solid var(--border); }
+    h2 { font-size: 1.15rem; margin: 0 0 10px; font-weight: 650; }
+    h3 { font-size: 1.02rem; margin: 18px 0 8px; font-weight: 600; }
+    p { margin: 0 0 12px; color: var(--muted); max-width: 42em; }
+    p strong, li strong { color: var(--text); font-weight: 600; }
+    ul, ol { margin: 0 0 14px; padding-left: 1.25em; color: var(--muted); max-width: 42em; }
+    li { margin-bottom: 8px; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.88em;
+      background: var(--chip);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 6px;
+      color: var(--text);
+    }
+    .example {
+      margin: 0 0 14px;
+      padding: 12px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+    .example code { margin: 0 2px; }
+    .cta {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 8px 0 12px;
+    }
+    .cta p { margin: 0 0 10px; }
+    .cta .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      align-items: center;
+      margin-top: 4px;
+    }
+    .price {
+      display: inline-block;
+      background: var(--chip);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .runtime { font-size: 0.8rem; color: var(--muted); }
+    .btn {
+      display: inline-block;
+      padding: 7px 14px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #0a1220;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+    .btn:hover { text-decoration: none; filter: brightness(1.06); }
+    .scope-list { font-size: 0.92rem; }
+    footer {
+      margin-top: 36px;
+      padding: 24px 0 40px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="brand"><a href="https://mamonasr789-png.github.io/quietforgetools/"><strong>QuietForgeTools</strong></a> · CSV troubleshooting</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap hero">
+      <h1>CSV UTF-8 &amp; BOM Problems in Excel — How to Diagnose and Fix Them</h1>
+      <p class="lead">
+        You open a CSV in Excel and accented or non-English characters look wrong —
+        <code>cafÃ©</code> instead of <code>café</code>, or strange symbols where names
+        and addresses should be. Often the file is valid UTF-8, but Excel guessed the
+        wrong encoding when you double-clicked it. This guide explains UTF-8, the BOM,
+        how to tell encoding problems from delimiter problems, and safe manual fixes.
+      </p>
+      <p class="note">
+        Scope: diagnosing and fixing <strong>character encoding / UTF-8 BOM</strong>
+        issues when opening CSV in Excel. Excel behaviour varies by version, language
+        pack, operating system, and whether you open via double-click, File → Open, or
+        Get Data / Power Query. This page does not claim one fix works on every combo.
+        Related free diagnostic (reports BOM among other checks):
+        <a href="https://mamonasr789-png.github.io/quietforgetools/csv-health-check/">CSV Health Check</a>.
+      </p>
+    </div>
+
+    <section aria-labelledby="utf8">
+      <div class="wrap">
+        <h2 id="utf8">What UTF-8 is</h2>
+        <p>
+          <strong>UTF-8</strong> is a character encoding: a rule for turning text
+          (letters, accents, CJK characters, emoji) into bytes on disk. Most modern
+          exports from web apps, databases, and programming languages use UTF-8.
+          A CSV that is “valid UTF-8” stores those bytes correctly — but an app can
+          still <em>display</em> them wrong if it assumes a different encoding when
+          reading the file.
+        </p>
+        <p>
+          Plain ASCII (A–Z, digits, basic punctuation) looks the same in UTF-8 and in
+          older Western encodings. Problems show up when the file contains bytes for
+          accented or non-Latin characters.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="bom">
+      <div class="wrap">
+        <h2 id="bom">What a BOM is</h2>
+        <p>
+          A <strong>BOM</strong> (Byte Order Mark) is a short signature at the very
+          start of a file. For UTF-8 it is the three bytes <code>EF BB BF</code>.
+          Those bytes are not part of your CSV columns; they are a hint that the rest
+          of the file is UTF-8.
+        </p>
+        <p>
+          <strong>UTF-8</strong> vs <strong>UTF-8 with BOM</strong>: same character
+          encoding for the data; the only difference is whether those three hint bytes
+          are present at the start. Some tools (including many Excel double-click opens
+          on Windows) use the BOM as a strong signal to read the file as UTF-8.
+          Other tools ignore the BOM or treat it as unwanted leading characters.
+        </p>
+        <ul>
+          <li>Adding a BOM does <strong>not</strong> convert Windows-1252 or other legacy bytes into UTF-8.</li>
+          <li>If the file is already wrong encoding, a BOM alone will not repair the text.</li>
+          <li>A file that already has a UTF-8 BOM should keep a single BOM — do not stack another.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="excel">
+      <div class="wrap">
+        <h2 id="excel">Why Excel sometimes misreads CSV encoding</h2>
+        <p>
+          When you double-click a <code>.csv</code> file, Excel often picks an encoding
+          from regional defaults or a quick guess — not always UTF-8. If the file is
+          UTF-8 without a BOM, Excel may treat multi-byte UTF-8 sequences as
+          Windows-1252 (or another code page). The result is <strong>mojibake</strong>:
+          garbled characters that look vaguely related to the original.
+        </p>
+        <div class="example">
+          <strong style="color:var(--text)">Non-ASCII example:</strong>
+          Source text <code>José · café · naïve · Zürich</code> stored as UTF-8.
+          Opened with the wrong encoding in Excel, it may appear as something like
+          <code>JosÃ© · cafÃ© · naÃ¯ve · ZÃ¼rich</code>. The bytes on disk can still
+          be correct UTF-8; the display path is wrong.
+        </div>
+        <p>
+          Opening via <strong>Data → From Text/CSV</strong> (or Get Data) usually lets
+          you choose UTF-8 explicitly and is more reliable than double-click on many
+          desktop Excel builds. Exact menu names differ by Excel year and platform.
+          macOS Excel and Windows Excel do not always behave the same way for the same file.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="symptoms">
+      <div class="wrap">
+        <h2 id="symptoms">Common symptoms</h2>
+        <ul>
+          <li>Accented letters, names, or addresses look like <code>Ã</code>, <code>Â</code>, or random symbols.</li>
+          <li>Text looks fine in a code editor or browser, but wrong in Excel after double-click.</li>
+          <li>The first cell shows a weird character or the header looks shifted by one odd glyph (sometimes a visible BOM mishandling).</li>
+          <li>Re-saving from Excel “fixes” display but corrupts the file for other UTF-8 tools (or the reverse).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="vs-delim">
+      <div class="wrap">
+        <h2 id="vs-delim">Encoding problems vs delimiter / column problems</h2>
+        <p>
+          Do not treat every messy CSV open as an encoding issue.
+        </p>
+        <ul>
+          <li><strong>Encoding / BOM:</strong> individual characters inside cells are wrong (mojibake), but columns may still split correctly. Fixing encoding restores readable text without changing comma/semicolon layout.</li>
+          <li><strong>Delimiter / locale:</strong> whole columns merge or split wrong (one column where there should be five) because Excel expected <code>;</code> and the file uses <code>,</code> (or the reverse). Characters may look fine.</li>
+          <li><strong>Both at once:</strong> possible, but diagnose separately — first confirm characters in a text editor, then check delimiter with a known header row.</li>
+        </ul>
+        <p>
+          If columns are wrong but every letter looks correct, a BOM or UTF-8 conversion
+          will not fix the layout. If letters are garbled but columns look right, focus
+          on encoding — not on changing separators.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="manual">
+      <div class="wrap">
+        <h2 id="manual">Safe manual diagnosis</h2>
+        <div class="warn-box">
+          <strong>Keep an original backup.</strong> Copy the CSV (or zip the folder)
+          before any re-save, “Save As”, or conversion. Excel and some editors can
+          silently change encoding or delimiters when you save.
+        </div>
+
+        <h3>1. View the raw file outside Excel</h3>
+        <ol>
+          <li>Open the CSV in a plain text editor that can show encoding (VS Code, Notepad++, Sublime, etc.).</li>
+          <li>Confirm whether accented text already looks correct there. If it does, the file bytes are likely fine and Excel’s open path is the problem.</li>
+          <li>If text is already garbled in the editor, the export/source encoding may be wrong — a BOM will not repair it; you need a correct conversion from the real source encoding.</li>
+        </ol>
+
+        <h3>2. Check for a UTF-8 BOM</h3>
+        <ul>
+          <li>In a hex view or “show special characters” mode, look for leading bytes <code>EF BB BF</code>.</li>
+          <li>Editors often label the file “UTF-8 with BOM” vs “UTF-8”.</li>
+          <li>Absence of a BOM does not mean the file is not UTF-8 — it only means there is no Excel-oriented hint at the start.</li>
+        </ul>
+
+        <h3>3. Retry Excel with an explicit UTF-8 import</h3>
+        <ol>
+          <li>Prefer Data → From Text/CSV (or equivalent) over double-click.</li>
+          <li>Set File Origin / encoding to <strong>UTF-8</strong> (sometimes listed as 65001).</li>
+          <li>Confirm delimiter separately (comma vs semicolon) so you do not confuse encoding with locale.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section aria-labelledby="fixes">
+      <div class="wrap">
+        <h2 id="fixes">Safe manual fixes</h2>
+        <ul class="scope-list">
+          <li><strong>Import with UTF-8 selected</strong> — often enough when the file is already valid UTF-8.</li>
+          <li><strong>Add a single UTF-8 BOM</strong> for recipients who will double-click on Windows Excel — only if the body is already valid UTF-8. Do not add a second BOM.</li>
+          <li><strong>Re-export from the source</strong> as UTF-8 (with or without BOM, depending on the consumer) instead of “fixing” a file that was saved in the wrong encoding.</li>
+          <li><strong>Explicit conversion</strong> from a known legacy encoding (for example Windows-1252) to UTF-8 — only when you know the source encoding. Guessing wrong makes mojibake worse.</li>
+        </ul>
+        <h3>When a BOM helps — and when it does not</h3>
+        <ul>
+          <li><strong>Helps:</strong> valid UTF-8 CSV without BOM; Excel double-click mis-guesses encoding; adding <code>EF BB BF</code> steers many Windows Excel opens toward UTF-8.</li>
+          <li><strong>Does not help:</strong> file is not UTF-8; wrong delimiter/locale; data already corrupted by a bad round-trip; consumer that rejects BOMs (some Unix pipelines and strict parsers).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="auto">
+      <div class="wrap">
+        <h2 id="auto">Want the quick local fix?</h2>
+        <p>
+          If you prefer an offline browser tool that prepares a downloadable
+          Excel-oriented copy without uploading your file, QuietForgeTools publishes:
+        </p>
+        <div class="cta">
+          <p>
+            <strong style="color:var(--text)">CSV → Excel-Ready — Offline Encoding &amp; BOM Fixer</strong> —
+            offline HTML in a modern desktop browser. It can
+            <strong>add an Excel-compatible UTF-8 BOM</strong>,
+            <strong>preserve CSV bytes and formatting</strong>,
+            <strong>detect an existing UTF-8 BOM</strong> (keeps a single BOM),
+            and optionally apply an <strong>explicit Windows-1252 → UTF-8 conversion</strong>
+            (not auto-guessed). No uploads or accounts. The original file is left untouched;
+            you download a new file. Excel behaviour still varies by version, system, and open method.
+          </p>
+          <div class="meta">
+            <span class="price">£5</span>
+            <span class="runtime">itch.io · £5.00 GBP or more · Buy Now · ZIP: CSV-Excel-Ready-v1.0.zip</span>
+            <a class="btn" href="https://quietforgetools.itch.io/csv-excel-ready-offline-encoding-bom-fixer">Open Excel-Ready on itch.io</a>
+          </div>
+        </div>
+        <p>
+          The diagnosis and manual steps above remain useful on their own. Buying the
+          tool is optional — use it when you want a local BOM/encoding prep step without
+          hand-editing bytes. For a free read-only scan that reports BOM among other CSV
+          issues, see the
+          <a href="https://mamonasr789-png.github.io/quietforgetools/csv-health-check/">CSV Health Check</a>.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>QuietForgeTools · free troubleshooting resource · no analytics · no cookies</p>
+      <p>
+        <a href="https://mamonasr789-png.github.io/quietforgetools/">Catalogue</a>
+        ·
+        <a href="https://mamonasr789-png.github.io/quietforgetools/csv-health-check/">CSV Health Check</a>
+        ·
+        <a href="https://quietforgetools.itch.io/csv-excel-ready-offline-encoding-bom-fixer">Excel-Ready on itch.io</a>
+        ·
+        <a href="https://github.com/mamonasr789-png/quietforgetools">GitHub</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
