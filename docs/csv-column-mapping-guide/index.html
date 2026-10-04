@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How to Map CSV Columns Safely When Headers or Order Differ | QuietForgeTools</title>
+  <meta name="description" content="Map CSV columns safely when headers or order differ: source vs target schemas, header-name mapping vs position, reorder, missing/extra columns, mapping tables, preview, backup, Excel/Sheets steps." />
+  <link rel="canonical" href="https://mamonasr789-png.github.io/quietforgetools/csv-column-mapping-guide/" />
+  <meta name="robots" content="index,follow" />
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --border: #2d3a4d;
+      --text: #e7ecf3;
+      --muted: #9aa8bc;
+      --accent: #6db3f2;
+      --chip: #243044;
+      --warn: #f0b429;
+      --ok: #3ecf8e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      font-size: 16px;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+    header { border-bottom: 1px solid var(--border); padding: 18px 0; }
+    .brand { font-size: 0.9rem; color: var(--muted); }
+    .brand strong { color: var(--text); font-weight: 600; }
+    .brand a { color: var(--muted); }
+    .brand a:hover { color: var(--accent); }
+    .hero { padding: 36px 0 12px; }
+    h1 { font-size: 1.55rem; line-height: 1.25; margin: 0 0 12px; font-weight: 700; }
+    .lead { color: var(--muted); margin: 0 0 8px; max-width: 40em; }
+    .note {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 16px 0 0;
+      padding: 12px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .warn-box {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 0 0 14px;
+      padding: 12px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--warn);
+      border-radius: 8px;
+    }
+    .warn-box strong { color: var(--warn); }
+    section { padding: 28px 0 8px; border-top: 1px solid var(--border); }
+    h2 { font-size: 1.15rem; margin: 0 0 10px; font-weight: 650; }
+    h3 { font-size: 1.02rem; margin: 18px 0 8px; font-weight: 600; }
+    p { margin: 0 0 12px; color: var(--muted); max-width: 42em; }
+    p strong, li strong { color: var(--text); font-weight: 600; }
+    ul, ol { margin: 0 0 14px; padding-left: 1.25em; color: var(--muted); max-width: 42em; }
+    li { margin-bottom: 8px; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.88em;
+      background: var(--chip);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 6px;
+      color: var(--text);
+    }
+    .example {
+      margin: 0 0 14px;
+      padding: 12px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+    .example code { margin: 0 2px; }
+    table.map {
+      width: 100%;
+      max-width: 42em;
+      border-collapse: collapse;
+      margin: 0 0 14px;
+      font-size: 0.92rem;
+    }
+    table.map th, table.map td {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      text-align: left;
+      color: var(--muted);
+    }
+    table.map th {
+      background: var(--surface);
+      color: var(--text);
+      font-weight: 600;
+    }
+    .cta {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 8px 0 12px;
+    }
+    .cta p { margin: 0 0 10px; }
+    .cta .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      align-items: center;
+      margin-top: 4px;
+    }
+    .price {
+      display: inline-block;
+      background: var(--chip);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .runtime { font-size: 0.8rem; color: var(--muted); }
+    .btn {
+      display: inline-block;
+      padding: 7px 14px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #0a1220;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+    .btn:hover { text-decoration: none; filter: brightness(1.06); }
+    .scope-list { font-size: 0.92rem; }
+    footer {
+      margin-top: 36px;
+      padding: 24px 0 40px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="brand"><a href="https://mamonasr789-png.github.io/quietforgetools/"><strong>QuietForgeTools</strong></a> · CSV troubleshooting</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap hero">
+      <h1>How to Map CSV Columns Safely When Headers or Order Differ</h1>
+      <p class="lead">
+        Exports rarely match the exact column names and order your CRM, accounting
+        tool, or import template expects. This guide covers source versus target
+        schemas, why matching by header name is safer than assuming column position,
+        how to handle reordered, missing, and extra columns, and how to preview
+        before you overwrite anything.
+      </p>
+      <p class="note">
+        Scope: remapping <strong>columns within one CSV</strong> (rename / reorder /
+        fill defaults). This is not a guide to joining two files by customer ID.
+        Related free diagnostic:
+        <a href="https://mamonasr789-png.github.io/quietforgetools/csv-health-check/">CSV Health Check</a>.
+        This page is a written workflow guide, not a product listing.
+      </p>
+    </div>
+
+    <section aria-labelledby="schemas">
+      <div class="wrap">
+        <h2 id="schemas">Source schema vs target schema</h2>
+        <p>
+          The <strong>source</strong> is the CSV you already have — its header row is
+          the source schema (column names and their left-to-right order). The
+          <strong>target</strong> is the layout you need — often an import template,
+          a CRM field list, or another system’s expected header row.
+        </p>
+        <p>
+          Mapping means deciding, for each target column: which source column feeds
+          it (if any), what order the output columns should appear in, and what to
+          do when a target field has no matching source.
+        </p>
+        <div class="example">
+          <strong style="color:var(--text)">Tiny example</strong><br />
+          Source headers: <code>customer_email</code>, <code>first_name</code>,
+          <code>last_name</code>, <code>order_total</code>, <code>notes</code><br />
+          Target headers: <code>Email</code>, <code>First Name</code>,
+          <code>Last Name</code>, <code>Amount</code>, <code>Currency</code>,
+          <code>Notes</code>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="position">
+      <div class="wrap">
+        <h2 id="position">Why header / name mapping beats positional assumptions</h2>
+        <div class="warn-box">
+          <strong>Positional assumption warning.</strong> Treating “column 3 is
+          always Last Name” breaks as soon as an export adds a column, drops one,
+          or reorders fields. Matching by <em>header name</em> (or an explicit
+          rename table) survives those layout changes; matching by index alone often
+          silently shifts data into the wrong fields.
+        </div>
+        <ul>
+          <li>Vendors change export column order between product versions.</li>
+          <li>Optional fields appear only for some rows or account types.</li>
+          <li>Someone inserts a helper column in a shared sheet before export.</li>
+        </ul>
+        <p>
+          Prefer an explicit map of target name → source name. Document the map so
+          the next person (or future you) can see the assumptions.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="maptable">
+      <div class="wrap">
+        <h2 id="maptable">Renamed headers and an explicit mapping table</h2>
+        <p>
+          Write the mapping down before you rearrange columns. A small table (or
+          JSON / sheet tab) is enough:
+        </p>
+        <table class="map" aria-label="Example source-to-target column mapping">
+          <thead>
+            <tr>
+              <th>Target column</th>
+              <th>Source column</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>Email</code></td>
+              <td><code>customer_email</code></td>
+              <td>rename</td>
+            </tr>
+            <tr>
+              <td><code>First Name</code></td>
+              <td><code>first_name</code></td>
+              <td>rename</td>
+            </tr>
+            <tr>
+              <td><code>Last Name</code></td>
+              <td><code>last_name</code></td>
+              <td>rename</td>
+            </tr>
+            <tr>
+              <td><code>Amount</code></td>
+              <td><code>order_total</code></td>
+              <td>rename</td>
+            </tr>
+            <tr>
+              <td><code>Currency</code></td>
+              <td>—</td>
+              <td>no source; default <code>GBP</code></td>
+            </tr>
+            <tr>
+              <td><code>Notes</code></td>
+              <td><code>notes</code></td>
+              <td>same meaning</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Keep unmatched decisions explicit: which source columns you ignore, which
+          targets get a static default, and which mismatches should abort rather
+          than silently blank out.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="reorder">
+      <div class="wrap">
+        <h2 id="reorder">Reordered columns</h2>
+        <p>
+          Even when every header name matches, importers often require a specific
+          left-to-right order. After you resolve renames, set the <strong>output
+          column order</strong> to match the target template — do not assume the
+          source order is acceptable.
+        </p>
+        <p>
+          In spreadsheets this usually means inserting blank columns, cutting/pasting
+          columns into the template order, or building a new sheet whose first row is
+          the target header list and whose cells pull values with formulas keyed by
+          header name (safer than paste-by-position).
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="missing">
+      <div class="wrap">
+        <h2 id="missing">Missing target columns</h2>
+        <p>
+          A target column with no source counterpart needs a conscious choice:
+        </p>
+        <ul class="scope-list">
+          <li><strong>Leave blank</strong> — acceptable if the importer allows empty values.</li>
+          <li><strong>Fill a default</strong> — e.g. always <code>GBP</code> for Currency when the export omitted it.</li>
+          <li><strong>Stop and fix upstream</strong> — if the field is required and you have no trustworthy default.</li>
+        </ul>
+        <p>
+          Silent blanks for required fields cause failed imports or bad records later.
+          Prefer documenting the choice in your mapping table.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="extra">
+      <div class="wrap">
+        <h2 id="extra">Extra source columns</h2>
+        <p>
+          Source files often contain columns the target does not need (internal IDs,
+          debug flags, duplicate email variants). Typical safe behaviour: <strong>ignore
+          unmapped source columns</strong> in the mapped output — do not delete them
+          from your backup of the original file.
+        </p>
+        <p>
+          If you might need those fields later, keep the original CSV (or archive it)
+          rather than trimming the only copy down to the target schema.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="preview">
+      <div class="wrap">
+        <h2 id="preview">Preview before export and quick validation checks</h2>
+        <ol>
+          <li>Write the mapped result to a <strong>new file</strong> (never overwrite the source on the first pass).</li>
+          <li>Confirm the output header row matches the target list <em>exactly</em> (spelling, spacing, order).</li>
+          <li>Spot-check several data rows: emails still look like emails, amounts still look like amounts, names did not shift into the wrong fields.</li>
+          <li>Count rows: mapped row count should match source data rows unless you intentionally filtered.</li>
+          <li>Check required targets are non-blank (or intentionally defaulted).</li>
+        </ol>
+        <p>
+          A five-minute preview catches most “column 4 slid into column 5” mistakes
+          before they hit production imports.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="backup">
+      <div class="wrap">
+        <h2 id="backup">Backup / original-file warning</h2>
+        <div class="warn-box">
+          <strong>Keep an original backup.</strong> Copy the CSV (or zip the folder)
+          before any column rearrange, Save As, or scripted rewrite. Spreadsheet apps
+          and CLIs can overwrite working files; a backup lets you undo a bad map.
+        </div>
+        <ol>
+          <li>Copy <code>orders.csv</code> → <code>orders.backup.csv</code> (or archive the folder).</li>
+          <li>Work only on a working copy.</li>
+          <li>Write mapped output to a new path — never overwrite the source until you are sure.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section aria-labelledby="sheets">
+      <div class="wrap">
+        <h2 id="sheets">Manual Excel / Google Sheets workflow</h2>
+        <p>
+          Excel and Google Sheets can remap columns for many everyday files. Different
+          apps and import wizards do not all behave identically — verify separators,
+          encodings, and whether the first row is treated as headers.
+        </p>
+        <h3>Excel (typical desktop flow)</h3>
+        <ol>
+          <li>Open a <strong>copy</strong> of the CSV (or Data → From Text/CSV so encoding stays under control).</li>
+          <li>Paste or open the <strong>target</strong> header row on a second sheet (or insert a blank workbook that matches the import template).</li>
+          <li>Use formulas keyed by header name (e.g. <code>XLOOKUP</code> / <code>INDEX+MATCH</code> on the header row) or carefully cut/paste whole columns into the target order — avoid shifting cells by drag when headers differ.</li>
+          <li>Fill missing targets with blanks or documented defaults.</li>
+          <li>Export / Save As CSV UTF-8 to a new filename; preview before importing elsewhere.</li>
+        </ol>
+        <h3>Google Sheets</h3>
+        <ol>
+          <li>File → Import the CSV into a new spreadsheet (keep the original file).</li>
+          <li>Create a second sheet whose first row is the exact target headers.</li>
+          <li>Pull values with header-aware formulas, or copy columns one-by-one into the target order using the mapping table as a checklist.</li>
+          <li>Download as CSV and validate headers + a sample of rows before the real import.</li>
+        </ol>
+        <p>
+          Spreadsheet remapping is workable for small-to-medium tables you can eyeball.
+          It becomes error-prone when files are large, when renames are many, when you
+          need repeatable defaults, or when you must refuse a run if a mapped source
+          header is missing.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="when">
+      <div class="wrap">
+        <h2 id="when">When an offline mapping tool helps</h2>
+        <ul>
+          <li>You remap the same source→target shape repeatedly and want a reusable JSON (or similar) map.</li>
+          <li>You need a clear failure if a mapped source header is missing (no silent blank for that field).</li>
+          <li>You want target column order enforced every run without drag-and-drop in a sheet.</li>
+          <li>Privacy: you prefer not to upload the CSV to a web app.</li>
+        </ul>
+        <p>
+          For a quick free signal about duplicate headers, blank headers, or uneven
+          widths (among other CSV issues), use the
+          <a href="https://mamonasr789-png.github.io/quietforgetools/csv-health-check/">CSV Health Check</a>
+          in your browser — it diagnoses; it does not remap columns for you.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="cta">
+      <div class="wrap">
+        <h2 id="cta">Need to map a CSV locally without uploading it?</h2>
+        <p>
+          If you want an offline CLI that maps columns via an editable JSON file and
+          writes a new CSV in the target column order, QuietForgeTools publishes:
+        </p>
+        <div class="cta">
+          <p>
+            <strong style="color:var(--text)">CSV Column Mapper v1.0.0 — Offline Schema Mapping Tool</strong> —
+            Python 3.10+ standard-library CLI (Linux, macOS, Windows). Map columns via
+            editable JSON (<code>target → source</code> rename); produce a new CSV in
+            target column order; optional <code>--target-headers</code>; optional static
+            defaults; unmapped source columns ignored; missing mapped source headers
+            raise a clear error. Schema mapping / column rename only — does
+            <strong>not</strong> merge or join rows by key. No Excel, no network, no AI.
+            Source is never overwritten.
+          </p>
+          <div class="meta">
+            <span class="price">£5</span>
+            <span class="runtime">itch.io · £5.00 GBP or more · Buy Now</span>
+            <a class="btn" href="https://quietforgetools.itch.io/csv-column-mapper-offline-schema-mapping-tool">Open Column Mapper on itch.io</a>
+          </div>
+        </div>
+        <p>
+          The mapping-table, backup, and preview steps above remain useful on their
+          own. Buying the tool is optional — use it when you want repeatable offline
+          schema mapping with explicit JSON. Spreadsheet remapping remains a valid
+          path for many smaller files.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>QuietForgeTools · free troubleshooting resource · no analytics · no cookies</p>
+      <p>
+        <a href="https://mamonasr789-png.github.io/quietforgetools/">Catalogue</a>
+        ·
+        <a href="https://mamonasr789-png.github.io/quietforgetools/csv-health-check/">CSV Health Check</a>
+        ·
+        <a href="https://quietforgetools.itch.io/csv-column-mapper-offline-schema-mapping-tool">Column Mapper on itch.io</a>
+        ·
+        <a href="https://github.com/mamonasr789-png/quietforgetools">GitHub</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
