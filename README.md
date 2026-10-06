@@ -219,7 +219,7 @@ Bundle £8 vs £5 + £5 = £10 separately. Tools remain independent CLIs either 
 **Limitations**
 
 - Chromium folder-picker browsers only (Chrome, Edge, Brave). Firefox/Safari not supported for folder selection
-- Scans only the core JSON files and event commands listed in the tool UI — not every asset reference
+- Scans only the core JSON files and the map event commands named on the itch product page — not every asset reference
 - Not scanned: CommonEvents.json; plugin parameters / plugin JS; fonts; movies; dynamically generated filenames; internal MZ Effekseer details beyond effects named in Animations.json
 - No auto-fix
 - Does not integrate with the CSV tools or RFQ Matcher
