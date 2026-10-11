@@ -165,6 +165,15 @@
       "summary": "Pack of Webhook Tester (£5) + Sync Toolkit (£19) + Delimiter Inspector (£4) + Formula Checker (£4). Individual total £32; bundle £24 (£8 / 25% savings). Diagnostics + self-hosted implementation starting point. Not a hosted service.",
       "runtime": "Browser HTML + Apps Script + Python 3.9+",
       "purchase_url": "https://quietforgetools.itch.io/woocommerce-google-sheets-starter-bundle"
+    },
+    {
+      "name": "WooCommerce Product CSV Preflight Checker",
+      "version": "1.0",
+      "price_gbp": 7,
+      "category": "csv",
+      "summary": "Offline browser preflight for WooCommerce product CSV imports: schema, variations/parents, prices, attributes, GTIN, formula-injection. Local-only; source file never modified. Does not guarantee successful imports.",
+      "runtime": "Modern desktop browser (local HTML)",
+      "purchase_url": "https://quietforgetools.itch.io/woocommerce-product-csv-preflight-checker"
     }
   ]
 }
