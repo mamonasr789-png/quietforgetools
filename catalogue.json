@@ -149,6 +149,15 @@
       "summary": "Apps Script webhook receiver + Python backfill/reconcile starting point for WooCommerce→Sheets order sync. Synthetic-tested offline. Not a hosted managed integration. Buyer configures own WooCommerce + Google. Not affiliated with WooCommerce/Automattic/Google.",
       "runtime": "Apps Script + Python 3.9+",
       "purchase_url": "https://quietforgetools.itch.io/woocommerce-google-sheets-sync-toolkit"
+    },
+    {
+      "name": "WooCommerce → Google Sheets Starter Bundle",
+      "version": "1.0",
+      "price_gbp": 24,
+      "category": "woocommerce",
+      "summary": "Pack of Webhook Tester (£5) + Sync Toolkit (£19) + Delimiter Inspector (£4) + Formula Checker (£4). Individual total £32; bundle £24 (£8 / 25% savings). Diagnostics + self-hosted implementation starting point. Not a hosted service.",
+      "runtime": "Browser HTML + Apps Script + Python 3.9+",
+      "purchase_url": "https://quietforgetools.itch.io/woocommerce-google-sheets-starter-bundle"
     }
   ]
 }
