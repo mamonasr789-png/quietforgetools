@@ -3,7 +3,7 @@
   "publisher_url": "https://quietforgetools.itch.io/",
   "hub_url": "https://mamonasr789-png.github.io/quietforgetools/",
   "catalogue_repo": "https://github.com/mamonasr789-png/quietforgetools",
-  "positioning": "QuietForgeTools \u2014 small practical tools and fixed-scope technical services.",
+  "positioning": "QuietForgeTools — small practical tools and fixed-scope technical services.",
   "note": "Public commercial catalogue metadata only. Does not distribute paid source or purchase ZIPs. Does not expose private payment URLs. Prices as documented for live QuietForgeTools listings; underlying offers unchanged by this catalogue.",
   "free_tools": [
     {
@@ -17,7 +17,7 @@
       "name": "WordPress Contact Form Says Submitted but No Enquiry Received",
       "price": "free",
       "summary": "Visitor sees success/thank-you but the business cannot find the enquiry; traces storage, notifications, mail, recipient, and CRM.",
-      "runtime": "Static guide \u00b7 DIY first",
+      "runtime": "Static guide · DIY first",
       "url": "https://mamonasr789-png.github.io/quietforgetools-wp-form-submitted-no-enquiry/"
     }
   ],
@@ -37,7 +37,7 @@
     {
       "name": "Enquiry Path Repair",
       "price_gbp": 149,
-      "summary": "Fixed-scope repair for a broken WordPress contact, enquiry, or quote path after diagnosis \u2014 bounded work with a written outcome.",
+      "summary": "Fixed-scope repair for a broken WordPress contact, enquiry, or quote path after diagnosis — bounded work with a written outcome.",
       "url": "https://mamonasr789-png.github.io/quietforgetools-enquiry-repair/"
     }
   ],
@@ -52,7 +52,7 @@
       "purchase_url": "https://quietforgetools.itch.io/rpg-maker-case-sensitive-asset-auditor"
     },
     {
-      "name": "CSV \u2192 Excel-Ready",
+      "name": "CSV → Excel-Ready",
       "version": "1.0",
       "price_gbp": 5,
       "category": "csv",
@@ -83,12 +83,12 @@
       "version": "1.0.0",
       "price_gbp": 8,
       "category": "csv",
-      "summary": "Discounted package of CSV Column Mapper and CSV Duplicate Finder as two independent CLIs. Individual tools also sold at \u00a35 each (total \u00a310); toolkit is not exclusive.",
+      "summary": "Discounted package of CSV Column Mapper and CSV Duplicate Finder as two independent CLIs. Individual tools also sold at £5 each (total £10); toolkit is not exclusive.",
       "runtime": "Python 3.10+ (stdlib)",
       "purchase_url": "https://quietforgetools.itch.io/csv-cleanup-toolkit-offline-mapper-duplicate-finder"
     },
     {
-      "name": "RFQ \u2192 Catalogue Matcher",
+      "name": "RFQ → Catalogue Matcher",
       "version": "1.0.1",
       "price_gbp": 7,
       "category": "rfq",
@@ -106,13 +106,22 @@
       "purchase_url": "https://quietforgetools.itch.io/url-audit-report-offline-redirect-broken-link-analyzer"
     },
     {
-      "name": "WooCommerce \u2192 Sheets Webhook Tester",
+      "name": "WooCommerce → Sheets Webhook Tester",
       "version": "1.0",
       "price_gbp": 5,
       "category": "webhook",
       "summary": "Offline browser utility to paste WooCommerce-like order webhook JSON, validate it, preview sheet-style rows, export CSV, and flag missing fields / formula risks. Does not send webhooks or write to Sheets.",
       "runtime": "Modern desktop browser (local HTML)",
       "purchase_url": "https://quietforgetools.itch.io/woocommerce-sheets-webhook-tester"
+    },
+    {
+      "name": "CSV Formula-Injection Safety Checker",
+      "version": "1.0",
+      "price_gbp": 4,
+      "category": "csv",
+      "summary": "Offline browser utility that scans CSV for cells beginning with potential spreadsheet formula-injection prefixes (= + - @), preserves legitimate negatives, and exports sanitized CSV plus a diagnostic report. Not malware detection.",
+      "runtime": "Modern desktop browser (local HTML)",
+      "purchase_url": "https://quietforgetools.itch.io/csv-formula-injection-safety-checker"
     }
   ]
 }
