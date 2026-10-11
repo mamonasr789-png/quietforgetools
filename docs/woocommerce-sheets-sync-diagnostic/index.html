@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WooCommerce → Google Sheets Sync Diagnostic Checklist | QuietForgeTools</title>
+  <meta name="description" content="Free troubleshooting checklist for WooCommerce order webhooks into Google Sheets: no payload, payload but no sheet update, wrong data, duplicates/missing history. Copyable diagnostic template. No signup." />
+  <link rel="canonical" href="https://mamonasr789-png.github.io/quietforgetools/woocommerce-sheets-sync-diagnostic/" />
+  <meta name="robots" content="index,follow" />
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --border: #2d3a4d;
+      --text: #e7ecf3;
+      --muted: #9aa8bc;
+      --accent: #6db3f2;
+      --chip: #243044;
+      --warn: #f0b429;
+      --ok: #3ecf8e;
+      --path: #3d9cf0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      font-size: 16px;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+    header { border-bottom: 1px solid var(--border); padding: 18px 0; }
+    .brand { font-size: 0.9rem; color: var(--muted); }
+    .brand strong { color: var(--text); font-weight: 600; }
+    .brand a { color: var(--muted); }
+    .brand a:hover { color: var(--accent); }
+    .hero { padding: 36px 0 12px; }
+    h1 { font-size: 1.55rem; line-height: 1.25; margin: 0 0 12px; font-weight: 700; }
+    .lead { color: var(--muted); margin: 0 0 8px; max-width: 42em; }
+    .chip {
+      display: inline-block;
+      background: var(--chip);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 14px;
+      color: var(--ok);
+    }
+    .note {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 16px 0 0;
+      padding: 12px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--ok);
+      border-radius: 8px;
+    }
+    .note strong { color: var(--ok); }
+    .toc {
+      margin: 20px 0 0;
+      padding: 14px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .toc h2 { font-size: 0.95rem; margin: 0 0 8px; color: var(--muted); font-weight: 600; }
+    .toc ol { margin: 0; padding-left: 1.25em; color: var(--muted); }
+    .toc li { margin-bottom: 4px; }
+    section { padding: 28px 0 8px; border-top: 1px solid var(--border); }
+    h2 { font-size: 1.15rem; margin: 0 0 10px; font-weight: 650; }
+    h3 { font-size: 1.02rem; margin: 18px 0 8px; font-weight: 600; }
+    p { margin: 0 0 12px; color: var(--muted); max-width: 42em; }
+    p strong, li strong { color: var(--text); font-weight: 600; }
+    ul, ol { margin: 0 0 14px; padding-left: 1.25em; color: var(--muted); max-width: 42em; }
+    li { margin-bottom: 8px; }
+    .path-badge {
+      display: inline-block;
+      background: var(--chip);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--path);
+      border-radius: 6px;
+      padding: 2px 10px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--path);
+      margin-bottom: 10px;
+    }
+    code, .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.88em;
+      background: var(--chip);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 6px;
+      color: var(--text);
+    }
+    .check {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+    .check h3 { margin: 0 0 6px; font-size: 0.98rem; }
+    .check p { margin: 0; font-size: 0.92rem; }
+    .template-box {
+      margin: 8px 0 12px;
+      padding: 14px 16px;
+      background: #121820;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.82rem;
+      line-height: 1.45;
+      color: var(--muted);
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+    .template-actions { margin: 0 0 14px; }
+    .btn-copy {
+      appearance: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: transparent;
+      color: var(--accent);
+    }
+    .btn-copy:hover { border-color: var(--accent); }
+    .cta {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 8px 0 12px;
+    }
+    .cta p { margin: 0 0 10px; }
+    .cta .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      align-items: center;
+      margin-top: 4px;
+    }
+    .price {
+      display: inline-block;
+      background: var(--chip);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .runtime { font-size: 0.8rem; color: var(--muted); }
+    .btn {
+      display: inline-block;
+      padding: 7px 14px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #0a1220;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+    .btn:hover { text-decoration: none; filter: brightness(1.06); }
+    footer {
+      margin-top: 36px;
+      padding: 24px 0 40px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="brand"><a href="https://mamonasr789-png.github.io/quietforgetools/"><strong>QuietForgeTools</strong></a> · Free diagnostic checklist</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap hero">
+      <div class="chip">Free · no signup · static guide</div>
+      <h1>WooCommerce → Google Sheets Sync Diagnostic Checklist</h1>
+      <p class="lead">
+        Use this when WooCommerce order webhooks are supposed to land in Google Sheets
+        (often via Apps Script) but something fails: no payload, no row update, wrong
+        fields, duplicates, or missing history. Work the decision path that matches
+        what you observe. This page does not connect to your store or Google account.
+      </p>
+      <p class="note">
+        <strong>Privacy:</strong> no email signup, no analytics, no cookies, no external APIs.
+        Do not paste credentials, tokens, customer PII, or full order payloads into notes you share publicly.
+      </p>
+      <nav class="toc" aria-label="Decision paths">
+        <h2>Four decision paths</h2>
+        <ol>
+          <li><a href="#path-1">No payload arrives</a></li>
+          <li><a href="#path-2">Payload arrives but Sheet does not update</a></li>
+          <li><a href="#path-3">Rows appear but data is wrong</a></li>
+          <li><a href="#path-4">Duplicates / missing historical orders</a></li>
+        </ol>
+        <p style="margin:10px 0 0;font-size:0.9rem;"><a href="#template">Copyable diagnostic template</a> · <a href="#need-a-tool">Need a tool?</a></p>
+      </nav>
+    </div>
+
+    <section id="path-1" aria-labelledby="path-1-h">
+      <div class="wrap">
+        <div class="path-badge">Path 1</div>
+        <h2 id="path-1-h">No payload arrives</h2>
+        <p>WooCommerce never successfully delivers (or never attempts) a webhook body to your receiver URL.</p>
+
+        <div class="check">
+          <h3>1. Webhook enabled?</h3>
+          <p>WooCommerce → Settings → Advanced → Webhooks. Status must be <strong>Active</strong> (not Disabled / Paused). Topic typically <code>Order created</code> / <code>Order updated</code> / <code>Order restored</code> as required.</p>
+        </div>
+        <div class="check">
+          <h3>2. Delivery URL correct?</h3>
+          <p>Delivery URL must be the live Apps Script /web app (or other receiver) URL — usually ends with <code>/exec</code>, not <code>/dev</code>. No typos, no forgotten query token, HTTPS only. A wrong URL often still logs delivery attempts with 404/403.</p>
+        </div>
+        <div class="check">
+          <h3>3. WooCommerce delivery status / logs</h3>
+          <p>Open the webhook → Delivery history (or Logs). Look for recent attempts after a test order. Empty history after placing an order usually means the webhook is inactive, wrong topic, or events are not firing (caching / staging / order created offline).</p>
+        </div>
+        <div class="check">
+          <h3>4. HTTP response / error from receiver</h3>
+          <p>Note the HTTP code: <strong>200/2xx</strong> = receiver answered; <strong>401/403</strong> = auth or deployment access; <strong>404</strong> = wrong URL/version; <strong>500</strong> = script crash; timeout = script hung or cold start. Copy status + first line of response body into the template (no secrets).</p>
+        </div>
+        <div class="check">
+          <h3>5. Payload arriving vs not (external check)</h3>
+          <p>Temporarily point the webhook at a throwaway request bin you control, or use an offline payload paste tester. If the bin never sees POST bodies, the problem is still on the WooCommerce / hosting / firewall side — not Sheets.</p>
+        </div>
+        <div class="check">
+          <h3>6. Hosting / security blockers</h3>
+          <p>Some hosts, WAFs, or “disable REST” plugins block outbound webhook POSTs. Check failed cron, Action Scheduler, and firewall logs around the order time.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="path-2" aria-labelledby="path-2-h">
+      <div class="wrap">
+        <div class="path-badge">Path 2</div>
+        <h2 id="path-2-h">Payload arrives but Sheet does not update</h2>
+        <p>Delivery history shows 2xx (or your bin received JSON), yet no new row appears in the spreadsheet.</p>
+
+        <div class="check">
+          <h3>1. Apps Script deployment / version</h3>
+          <p>Confirm you are hitting the <strong>deployed</strong> web app URL for the version that contains your latest <code>doPost</code>. Editing the script without a new deployment leaves the old <code>/exec</code> behaviour unchanged. Prefer “New deployment” or update the existing deployment after edits.</p>
+        </div>
+        <div class="check">
+          <h3>2. Authorization / who has access</h3>
+          <p>Web app execute-as and access settings matter. Common mistakes: “Only myself” while WooCommerce is an unauthenticated caller; wrong Google account; revoked token; forgotten URL secret/query token check that rejects the POST before writing.</p>
+        </div>
+        <div class="check">
+          <h3>3. Script errors after HTTP 200</h3>
+          <p>Some receivers return 200 then fail on SpreadsheetApp writes. Open Apps Script → Executions. Look for failed runs at the delivery timestamp. Fix missing sheet name, wrong spreadsheet ID, or permission to the target file.</p>
+        </div>
+        <div class="check">
+          <h3>4. Wrong spreadsheet / tab</h3>
+          <p>Verify spreadsheet ID and tab/sheet name in script properties. Orders may be writing to a different file or a hidden sheet.</p>
+        </div>
+        <div class="check">
+          <h3>5. Filters / frozen views</h3>
+          <p>Sheet filter views can hide new rows. Clear filters; scroll to the bottom; check for rows beyond the visible range.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="path-3" aria-labelledby="path-3-h">
+      <div class="wrap">
+        <div class="path-badge">Path 3</div>
+        <h2 id="path-3-h">Rows appear but data is wrong</h2>
+        <p>Something lands in the sheet, but fields, dates, refunds, or cell safety look incorrect.</p>
+
+        <div class="check">
+          <h3>1. Expected order fields</h3>
+          <p>Compare a known test order against columns you expect (e.g. order id, status, total, currency, billing email, line items, dates). Missing nested fields often mean the mapper assumes a different WooCommerce payload shape (REST vs webhook topic version).</p>
+        </div>
+        <div class="check">
+          <h3>2. Timezone / date mismatches</h3>
+          <p>WooCommerce store timezone, UTC in JSON, and the spreadsheet locale/timezone can disagree. Check whether you store raw ISO timestamps vs formatted local times. Align on one canonical timezone in documentation and conversion code.</p>
+        </div>
+        <div class="check">
+          <h3>3. Refund handling</h3>
+          <p>Decide: separate refund rows, status overwrite, or net-total update? A create-only webhook will not reflect refunds. Confirm whether <code>Order updated</code> / refund topics are subscribed and how your upsert key behaves on status changes.</p>
+        </div>
+        <div class="check">
+          <h3>4. Spreadsheet formula-risk</h3>
+          <p>Customer-controlled strings (names, notes, SKUs) that start with <code>=</code>, <code>+</code>, <code>-</code>, or <code>@</code> can become formulas when opened in Sheets/Excel. Prefer prefixing risky cells with a safe marker (e.g. leading apostrophe / tab) or validating before write.</p>
+        </div>
+        <div class="check">
+          <h3>5. Number / locale formatting</h3>
+          <p>Totals as text vs number, decimal commas vs points, and currency symbols in numeric columns break sums. Keep raw numbers in data columns; format in the sheet UI.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="path-4" aria-labelledby="path-4-h">
+      <div class="wrap">
+        <div class="path-badge">Path 4</div>
+        <h2 id="path-4-h">Duplicates / missing historical orders</h2>
+        <p>Live webhooks may work while history gaps or repeated rows remain.</p>
+
+        <div class="check">
+          <h3>1. Duplicate orders</h3>
+          <p>Causes: webhook retried after timeout; both created + updated topics appending; missing upsert on order id; manual re-delivery. Prefer idempotent writes keyed by WooCommerce order id (update-or-insert), and log delivery IDs when available.</p>
+        </div>
+        <div class="check">
+          <h3>2. Missing rows for recent orders</h3>
+          <p>Check delivery history for those order IDs, script executions, and whether filters hide them. Confirm the webhook was Active at order time (not only now).</p>
+        </div>
+        <div class="check">
+          <h3>3. Missing historical orders (before webhook existed)</h3>
+          <p>Webhooks do not backfill. You need a one-off reconciliation/backfill from WooCommerce REST (or exports) into the same sheet schema, then keep webhooks for ongoing sync.</p>
+        </div>
+        <div class="check">
+          <h3>4. Reconciliation / backfill need</h3>
+          <p>Symptoms: sheet count ≪ store order count for a date range; gaps after outages; status drift. Plan: export or API-list orders for the window, upsert by order id, mark backfill source, then re-enable live webhooks.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="template" aria-labelledby="template-h">
+      <div class="wrap">
+        <h2 id="template-h">Copyable diagnostic template</h2>
+        <p>Fill this for yourself or a colleague. Omit credentials, tokens, customer names, emails, addresses, and full payloads.</p>
+        <div class="template-actions">
+          <button type="button" class="btn-copy" id="copy-template">Copy template</button>
+          <span id="copy-status" style="font-size:0.85rem;color:var(--muted);margin-left:8px;"></span>
+        </div>
+        <pre class="template-box" id="diag-template">WooCommerce → Sheets sync diagnostic
+Date (local): 
+Store timezone: 
+Sheet timezone/locale: 
+
+Symptom path (1–4): 
+  [ ] 1 No payload arrives
+  [ ] 2 Payload arrives, Sheet does not update
+  [ ] 3 Rows appear, data wrong
+  [ ] 4 Duplicates / missing historical orders
+
+Webhook
+  Status (Active/Disabled): 
+  Topic(s): 
+  Delivery URL host only (no token): 
+  Recent delivery HTTP code: 
+  Recent delivery error (one line, no secrets): 
+
+Receiver
+  Type (Apps Script / other): 
+  Deployment is /exec (Y/N): 
+  Access setting (summary): 
+  Script execution at delivery time (OK/Fail/None): 
+  Spreadsheet ID last-4 only: 
+  Tab name: 
+
+Data checks (if rows exist)
+  Sample order id (numeric only): 
+  Expected fields missing: 
+  Date/timezone mismatch (Y/N / note): 
+  Refund handling expected: 
+  Formula-risk cells seen (Y/N): 
+  Duplicate order ids seen (Y/N / count): 
+  History gap date range: 
+
+Next action: 
+</pre>
+      </div>
+    </section>
+
+    <section id="need-a-tool" aria-labelledby="cta-h">
+      <div class="wrap">
+        <h2 id="cta-h">Need a tool?</h2>
+        <p>
+          This checklist is free and complete on its own. If you want offline helpers or an
+          implementation starting point (buyer-hosted — not a QuietForgeTools-managed sync),
+          these existing products are available:
+        </p>
+
+        <div class="cta">
+          <p>
+            <strong style="color:var(--text)">£5 WooCommerce → Sheets Webhook Tester</strong> —
+            Offline browser utility to paste WooCommerce-like order webhook JSON, validate it,
+            preview sheet-style rows, export CSV, and flag missing fields / formula risks.
+            Does not send webhooks or write to Sheets.
+          </p>
+          <div class="meta">
+            <span class="price">£5</span>
+            <span class="runtime">itch.io · offline browser HTML</span>
+            <a class="btn" href="https://quietforgetools.itch.io/woocommerce-sheets-webhook-tester">Open Webhook Tester</a>
+          </div>
+        </div>
+
+        <div class="cta">
+          <p>
+            <strong style="color:var(--text)">£19 WooCommerce → Google Sheets Sync Toolkit</strong> —
+            Apps Script webhook receiver + Python backfill/reconcile starting point.
+            Synthetic-tested offline. Not a hosted managed integration — you configure your own WooCommerce + Google.
+          </p>
+          <div class="meta">
+            <span class="price">£19</span>
+            <span class="runtime">itch.io · Apps Script + Python</span>
+            <a class="btn" href="https://quietforgetools.itch.io/woocommerce-google-sheets-sync-toolkit">Open Sync Toolkit</a>
+          </div>
+        </div>
+
+        <div class="cta">
+          <p>
+            <strong style="color:var(--text)">£24 WooCommerce → Google Sheets Starter Bundle</strong> —
+            Pack including the Webhook Tester, Sync Toolkit, and related CSV diagnostics at a discount versus buying separately. Not a hosted service.
+          </p>
+          <div class="meta">
+            <span class="price">£24</span>
+            <span class="runtime">itch.io · bundle</span>
+            <a class="btn" href="https://quietforgetools.itch.io/woocommerce-google-sheets-starter-bundle">Open Starter Bundle</a>
+          </div>
+        </div>
+
+        <p>
+          Buying is optional. The four paths and template above remain useful without any purchase.
+          Not affiliated with WooCommerce, Automattic, or Google.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>QuietForgeTools · free troubleshooting resource · no analytics · no cookies · no signup</p>
+      <p>
+        <a href="https://mamonasr789-png.github.io/quietforgetools/">Catalogue</a>
+        ·
+        <a href="https://quietforgetools.itch.io/woocommerce-sheets-webhook-tester">Webhook Tester</a>
+        ·
+        <a href="https://quietforgetools.itch.io/woocommerce-google-sheets-sync-toolkit">Sync Toolkit</a>
+        ·
+        <a href="https://quietforgetools.itch.io/woocommerce-google-sheets-starter-bundle">Starter Bundle</a>
+        ·
+        <a href="https://github.com/mamonasr789-png/quietforgetools">GitHub</a>
+      </p>
+    </div>
+  </footer>
+  <script>
+    (function () {
+      var btn = document.getElementById('copy-template');
+      var box = document.getElementById('diag-template');
+      var status = document.getElementById('copy-status');
+      if (!btn || !box) return;
+      btn.addEventListener('click', function () {
+        var text = box.textContent || '';
+        function ok() { if (status) status.textContent = 'Copied'; }
+        function fail() { if (status) status.textContent = 'Select the template and copy manually'; }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(ok).catch(fail);
+        } else {
+          fail();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

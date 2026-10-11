@@ -19,6 +19,13 @@
       "summary": "Visitor sees success/thank-you but the business cannot find the enquiry; traces storage, notifications, mail, recipient, and CRM.",
       "runtime": "Static guide · DIY first",
       "url": "https://mamonasr789-png.github.io/quietforgetools-wp-form-submitted-no-enquiry/"
+    },
+    {
+      "name": "WooCommerce → Google Sheets Sync Diagnostic Checklist",
+      "price": "free",
+      "summary": "Free troubleshooting checklist for WooCommerce order webhooks into Google Sheets: four decision paths (no payload, payload but no sheet update, wrong data, duplicates/missing history) plus a copyable diagnostic template. No signup.",
+      "runtime": "Static guide · DIY first",
+      "url": "https://mamonasr789-png.github.io/quietforgetools/woocommerce-sheets-sync-diagnostic/"
     }
   ],
   "wordpress_services": [

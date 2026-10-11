@@ -13,6 +13,7 @@ Browser utilities that process data in your browser do so **locally on your mach
 | Name | What it is | Price | Action |
 |---|---|---|---|
 | **WordPress Enquiry Path Checklist** | Browser checklist to manually mark form, email, mobile, and delivery checks when a WordPress enquiry path seems broken — copyable diagnostic summary. | Free | [Open checklist](https://mamonasr789-png.github.io/quietforgetools-wp-enquiry-checklist/) |
+| **WooCommerce → Google Sheets Sync Diagnostic Checklist** | Free troubleshooting checklist: four decision paths for WooCommerce→Sheets webhook sync (no payload, no sheet update, wrong data, duplicates/missing history) plus copyable diagnostic template. Optional links to £5/£19/£24 tools. | Free | [Open checklist](https://mamonasr789-png.github.io/quietforgetools/woocommerce-sheets-sync-diagnostic/) |
 
 ## WordPress services
 
