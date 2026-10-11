@@ -33,6 +33,7 @@ Browser utilities that process data in your browser do so **locally on your mach
 | **CSV Cleanup Toolkit** | Discounted package of CSV Column Mapper and CSV Duplicate Finder as two independent offline CLIs. | £8 | Python 3.10+ stdlib (offline local) | [Buy on itch.io](https://quietforgetools.itch.io/csv-cleanup-toolkit-offline-mapper-duplicate-finder) |
 | **RFQ → Catalogue Matcher** | Offline Python CLI that matches plain-text RFQ line items to a JSON catalogue with MATCHED / AMBIGUOUS / UNMATCHED statuses. | £7 | Python 3.10+ stdlib (offline local) | [Buy on itch.io](https://quietforgetools.itch.io/rfq-catalogue-matcher-offline-line-item-matching-tool) |
 | **URL Audit Report** | Offline Python CLI that analyses supplied URL/status observations for redirect chains and broken-link signals (no crawl, no network). | £7 | Python 3.10+ stdlib (offline local) | [Buy on itch.io](https://quietforgetools.itch.io/url-audit-report-offline-redirect-broken-link-analyzer) |
+| **WooCommerce → Sheets Webhook Tester** | Offline browser HTML to paste WooCommerce webhook JSON, validate payloads, preview sheet rows, and export spreadsheet-safe CSV (does not send webhooks). | £5 | Desktop browser (local HTML) | [Buy on itch.io](https://quietforgetools.itch.io/woocommerce-sheets-webhook-tester) |
 
 Related product-specific documentation repos (unchanged by this catalogue):
 
@@ -258,6 +259,32 @@ Bundle £8 vs £5 + £5 = £10 separately. Tools remain independent CLIs either 
 
 ---
 
+
+### 8. WooCommerce → Sheets Webhook Tester v1.0 — £5
+
+**Audience:** Store owners and developers debugging WooCommerce order webhook JSON before (or beside) Apps Script / Google Sheets integrations — malformed payloads, missing fields, spreadsheet-safe exports.
+
+**Capabilities**
+
+- Paste or import WooCommerce-like order webhook JSON in a local browser page
+- Validate JSON and surface order id, status, totals, customer, and line items
+- Flag missing common fields and formula-risk values before they break a sheet
+- Flattened spreadsheet-style preview and CSV export for offline review
+- Offline; **does not send webhooks**; **does not connect to WooCommerce or write to Sheets**
+
+**Limitations (v1)**
+
+- Not a live webhook sender, receiver, or WooCommerce plugin
+- Does not authenticate to stores, Sheets, or Apps Script
+- Expects common order JSON shapes; exotic custom payloads may need manual review
+- Not a substitute for paid Webhook → Sheet/CRM Field Mapping Repair (£99) when the path already delivers but fields map wrong
+
+**Runtime:** Modern desktop browser (local HTML)
+
+**Buy:** [WooCommerce → Sheets Webhook Tester on itch.io](https://quietforgetools.itch.io/woocommerce-sheets-webhook-tester?utm_source=github&utm_campaign=quietforgetools-catalogue)
+
+---
+
 ## Synthetic workflow example
 
 See [`examples/README.md`](examples/README.md) for a fictional small-business CSV flow (customer export → duplicate review → schema mapping). See [`examples/url-audit-redirect-chain.md`](examples/url-audit-redirect-chain.md) for a tiny synthetic redirect-chain observation sketch for URL Audit Report. Synthetic data only.
@@ -266,7 +293,7 @@ See [`examples/README.md`](examples/README.md) for a fictional small-business CS
 
 ## Privacy
 
-Offline utilities are designed to run locally. Browser-local tools (Checklist, CSV → Excel-Ready HTML, Case Auditor) process data in your browser without uploading your files. Python CLIs run on your machine with no network requirement for their core function. Your CSVs / RFQs / RPG Maker projects / URL observation exports are not uploaded by the tools themselves. WordPress services are separate fixed-scope work and may require temporary site access after scope confirmation. This catalogue repo contains no customer data, credentials, private payment URLs, or analytics/cookies.
+Offline utilities are designed to run locally. Browser-local tools (Checklist, CSV → Excel-Ready HTML, Case Auditor, WooCommerce → Sheets Webhook Tester) process data in your browser without uploading your files. Python CLIs run on your machine with no network requirement for their core function. Your CSVs / RFQs / RPG Maker projects / URL observation exports are not uploaded by the tools themselves. WordPress services are separate fixed-scope work and may require temporary site access after scope confirmation. This catalogue repo contains no customer data, credentials, private payment URLs, or analytics/cookies.
 
 ## Licence / ownership
 

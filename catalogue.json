@@ -104,6 +104,15 @@
       "summary": "Offline redirect and broken-link analyzer for supplied source_url,target_url,status_code observations. Writes audit_summary, redirect_chains, and broken_links. Does not crawl websites or make network requests.",
       "runtime": "Python 3.10+ (stdlib)",
       "purchase_url": "https://quietforgetools.itch.io/url-audit-report-offline-redirect-broken-link-analyzer"
+    },
+    {
+      "name": "WooCommerce \u2192 Sheets Webhook Tester",
+      "version": "1.0",
+      "price_gbp": 5,
+      "category": "webhook",
+      "summary": "Offline browser utility to paste WooCommerce-like order webhook JSON, validate it, preview sheet-style rows, export CSV, and flag missing fields / formula risks. Does not send webhooks or write to Sheets.",
+      "runtime": "Modern desktop browser (local HTML)",
+      "purchase_url": "https://quietforgetools.itch.io/woocommerce-sheets-webhook-tester"
     }
   ]
 }
