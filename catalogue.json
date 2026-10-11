@@ -131,6 +131,15 @@
       "summary": "Offline browser utility that detects comma/semicolon/tab/pipe delimiters, diagnoses inconsistent rows, quotes, BOM/line endings, and exports a diagnostic report. Source file never modified.",
       "runtime": "Modern desktop browser (local HTML)",
       "purchase_url": "https://quietforgetools.itch.io/csv-delimiter-structure-inspector"
+    },
+    {
+      "name": "CSV Troubleshooting Bundle",
+      "version": "1.0",
+      "price_gbp": 14,
+      "category": "csv",
+      "summary": "Offline pack of CSV Essentials Toolkit, CSV Formula-Injection Safety Checker, and CSV Delimiter & Structure Inspector for diagnosing and cleaning messy CSV files. Individual total £20; bundle £14 (£6 / 30% savings). Constituent products unchanged.",
+      "runtime": "Browser HTML + Python 3.10+ stdlib CLIs (offline local)",
+      "purchase_url": "https://quietforgetools.itch.io/csv-troubleshooting-bundle"
     }
   ]
 }
