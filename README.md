@@ -41,6 +41,7 @@ Browser utilities that process data in your browser do so **locally on your mach
 | **WooCommerce → Google Sheets Sync Toolkit** | Apps Script + Python starting point for WooCommerce→Sheets order sync (receiver, upserts, refunds, reconcile). Not hosted; buyer configures own store/Google. Distinct from £5 Webhook Tester. | £19 | Apps Script + Python 3.9+ | [Buy on itch.io](https://quietforgetools.itch.io/woocommerce-google-sheets-sync-toolkit) |
 | **WooCommerce → Google Sheets Starter Bundle** | Pack of Webhook Tester (£5) + Sync Toolkit (£19) + Delimiter Inspector (£4) + Formula Checker (£4). Individual total £32; bundle £24 (£8 / 25% savings). Not a hosted service. | £24 | Browser HTML + Apps Script + Python 3.9+ | [Buy on itch.io](https://quietforgetools.itch.io/woocommerce-google-sheets-starter-bundle) |
 | **WooCommerce Product CSV Preflight Checker** | Offline browser HTML that preflights WooCommerce product CSV imports for schema, variation/parent, price, attribute, GTIN, and formula-injection hazards (source never modified). | £7 | Desktop browser (local HTML) | [Buy on itch.io](https://quietforgetools.itch.io/woocommerce-product-csv-preflight-checker) |
+| **CSV Import Safety Bundle** | Offline pack of Delimiter Inspector (£4) + Excel-Ready (£5) + Formula Checker (£4) + WooCommerce Product CSV Preflight (£7). Individual total £20; bundle £14 (£6 savings). Workflow: structure → encoding → formula → WooCommerce preflight. | £14 | Desktop browser (local HTML) | [Buy on itch.io](https://quietforgetools.itch.io/csv-import-safety-bundle) |
 
 Related product-specific documentation repos (unchanged by this catalogue):
 
@@ -462,6 +463,38 @@ Bundle £8 vs £5 + £5 = £10 separately. Tools remain independent CLIs either 
 
 ---
 
+### 15. CSV Import Safety Bundle v1.0 — £14
+
+**Audience:** Anyone who needs to inspect, harden, and preflight CSV files offline before spreadsheet open or WooCommerce product import — without uploading CSV to QuietForgeTools.
+
+**Included (unchanged standalone releases)**
+
+- CSV Delimiter & Structure Inspector (£4) — detect comma/semicolon/tab/pipe; diagnose quotes, widths, BOM, line endings
+- CSV → Excel-Ready Encoding & BOM Fixer (£5) — prepare UTF-8 CSV with Excel-compatible BOM offline
+- CSV Formula-Injection Safety Checker (£4) — scan cells for potential spreadsheet formula prefixes (= + - @); export sanitized CSV + report
+- WooCommerce Product CSV Preflight Checker (£7) — local preflight for likely WooCommerce product CSV import hazards
+
+**Workflow**
+
+Inspect structure → fix encoding → check formula risk → preflight WooCommerce import. Tools run separately; they do not call each other automatically.
+
+**Pricing**
+
+- Individual total £20; bundle £14; exact savings £6
+- Individual product prices on itch are unchanged
+- Not exclusive — constituent tools remain available separately
+
+**Limitations**
+
+- Limitations remain those of each constituent utility
+- The WooCommerce Product CSV Preflight Checker detects likely import hazards; it does **not** guarantee a successful WooCommerce import
+
+**Runtime:** Modern desktop browser (local HTML)
+
+**Buy:** [CSV Import Safety Bundle on itch.io](https://quietforgetools.itch.io/csv-import-safety-bundle?utm_source=github&utm_campaign=quietforgetools-catalogue)
+
+---
+
 ## Synthetic workflow example
 
 See [`examples/README.md`](examples/README.md) for a fictional small-business CSV flow (customer export → duplicate review → schema mapping). See [`examples/url-audit-redirect-chain.md`](examples/url-audit-redirect-chain.md) for a tiny synthetic redirect-chain observation sketch for URL Audit Report. Synthetic data only.
@@ -470,7 +503,7 @@ See [`examples/README.md`](examples/README.md) for a fictional small-business CS
 
 ## Privacy
 
-Offline utilities are designed to run locally. Browser-local tools (Checklist, CSV → Excel-Ready HTML, Case Auditor, WooCommerce → Sheets Webhook Tester, CSV Formula-Injection Safety Checker, CSV Delimiter & Structure Inspector, WooCommerce Product CSV Preflight Checker, and the CSV Troubleshooting Bundle pack) process data in your browser without uploading your files. Python CLIs, the WooCommerce → Google Sheets Sync Toolkit, and the WooCommerce → Google Sheets Starter Bundle pack (Apps Script + Python; buyer-hosted, not a QuietForgeTools-hosted sync) run on your machine / your Google account with no network requirement for their core offline functions. Your CSVs / RFQs / RPG Maker projects / URL observation exports / order payloads are not uploaded by the tools themselves to QuietForgeTools. WordPress services are separate fixed-scope work and may require temporary site access after scope confirmation. This catalogue repo contains no customer data, credentials, private payment URLs, or analytics/cookies.
+Offline utilities are designed to run locally. Browser-local tools (Checklist, CSV → Excel-Ready HTML, Case Auditor, WooCommerce → Sheets Webhook Tester, CSV Formula-Injection Safety Checker, CSV Delimiter & Structure Inspector, WooCommerce Product CSV Preflight Checker, the CSV Troubleshooting Bundle pack, and the CSV Import Safety Bundle pack) process data in your browser without uploading your files. Python CLIs, the WooCommerce → Google Sheets Sync Toolkit, and the WooCommerce → Google Sheets Starter Bundle pack (Apps Script + Python; buyer-hosted, not a QuietForgeTools-hosted sync) run on your machine / your Google account with no network requirement for their core offline functions. Your CSVs / RFQs / RPG Maker projects / URL observation exports / order payloads are not uploaded by the tools themselves to QuietForgeTools. WordPress services are separate fixed-scope work and may require temporary site access after scope confirmation. This catalogue repo contains no customer data, credentials, private payment URLs, or analytics/cookies.
 
 ## Licence / ownership
 
