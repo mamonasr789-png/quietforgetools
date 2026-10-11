@@ -135,6 +135,16 @@
       color: var(--accent);
     }
     .btn-copy:hover { border-color: var(--accent); }
+    .hint {
+      margin: 14px 0 0;
+      padding: 12px 14px;
+      background: var(--chip);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .hint a { color: var(--accent); }
     .cta {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -299,6 +309,13 @@
           <h3>4. Spreadsheet formula-risk</h3>
           <p>Customer-controlled strings (names, notes, SKUs) that start with <code>=</code>, <code>+</code>, <code>-</code>, or <code>@</code> can become formulas when opened in Sheets/Excel. Prefer prefixing risky cells with a safe marker (e.g. leading apostrophe / tab) or validating before write.</p>
         </div>
+
+        <p class="hint">
+          WooCommerce product CSV causing import problems?
+          I can check and prepare one product CSV (up to 2,000 rows) for <strong style="color:var(--text)">£69</strong>
+          — deliverables: <code>import-ready.csv</code> + preflight report (original file untouched).
+          See <a href="https://mamonasr789-png.github.io/quietforgetools-product-csv-import-safety-pass/">WooCommerce Product CSV Import Safety Pass</a>.
+        </p>
         <div class="check">
           <h3>5. Number / locale formatting</h3>
           <p>Totals as text vs number, decimal commas vs points, and currency symbols in numeric columns break sums. Keep raw numbers in data columns; format in the sheet UI.</p>
