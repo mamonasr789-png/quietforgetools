@@ -35,6 +35,7 @@ Browser utilities that process data in your browser do so **locally on your mach
 | **URL Audit Report** | Offline Python CLI that analyses supplied URL/status observations for redirect chains and broken-link signals (no crawl, no network). | £7 | Python 3.10+ stdlib (offline local) | [Buy on itch.io](https://quietforgetools.itch.io/url-audit-report-offline-redirect-broken-link-analyzer) |
 | **WooCommerce → Sheets Webhook Tester** | Offline browser HTML to paste WooCommerce webhook JSON, validate payloads, preview sheet rows, and export spreadsheet-safe CSV (does not send webhooks). | £5 | Desktop browser (local HTML) | [Buy on itch.io](https://quietforgetools.itch.io/woocommerce-sheets-webhook-tester) |
 | **CSV Formula-Injection Safety Checker** | Offline browser HTML that flags CSV cells with potential spreadsheet formula-injection prefixes (= + - @), preserves legitimate negatives, and exports sanitized CSV + report. | £4 | Desktop browser (local HTML) | [Buy on itch.io](https://quietforgetools.itch.io/csv-formula-injection-safety-checker) |
+| **CSV Delimiter & Structure Inspector** | Offline browser HTML that detects comma/semicolon/tab/pipe delimiters, diagnoses quotes/widths/BOM/line endings, and exports a diagnostic report (source never modified). | £4 | Desktop browser (local HTML) | [Buy on itch.io](https://quietforgetools.itch.io/csv-delimiter-structure-inspector) |
 
 Related product-specific documentation repos (unchanged by this catalogue):
 
@@ -312,6 +313,33 @@ Bundle £8 vs £5 + £5 = £10 separately. Tools remain independent CLIs either 
 
 ---
 
+### 10. CSV Delimiter & Structure Inspector v1.0 — £4
+
+**Audience:** Anyone who receives CSV/TSV files with unclear separators, mixed delimiters, or messy structure and wants a focused offline diagnosis before cleaning or importing.
+
+**Capabilities**
+
+- Drag/drop or select a CSV/TSV; parse entirely in the browser
+- Auto-detect among comma, semicolon, tab, and pipe; ambiguity / false-delimiter warnings
+- Manual delimiter override
+- Diagnose inconsistent row widths, unclosed/malformed quotes, blank/trailing columns, line endings, and detectable BOM/encoding indicators
+- Correct handling of quoted delimiters, escaped quotes, and multiline fields
+- Safe truncated preview; source file on disk is never modified
+- Copy or download a diagnostic report; built-in synthetic samples
+- Offline; **no upload**; **no analytics**
+
+**Limitations (v1)**
+
+- Heuristic detection — ambiguous files may need a manual override
+- Not a full encoding or data-quality suite; spreadsheet apps differ
+- Focused structure inspector — not a replacement for CSV Essentials Toolkit (£12)
+
+**Runtime:** Modern desktop browser (local HTML)
+
+**Buy:** [CSV Delimiter & Structure Inspector on itch.io](https://quietforgetools.itch.io/csv-delimiter-structure-inspector?utm_source=github&utm_campaign=quietforgetools-catalogue)
+
+---
+
 ## Synthetic workflow example
 
 See [`examples/README.md`](examples/README.md) for a fictional small-business CSV flow (customer export → duplicate review → schema mapping). See [`examples/url-audit-redirect-chain.md`](examples/url-audit-redirect-chain.md) for a tiny synthetic redirect-chain observation sketch for URL Audit Report. Synthetic data only.
@@ -320,7 +348,7 @@ See [`examples/README.md`](examples/README.md) for a fictional small-business CS
 
 ## Privacy
 
-Offline utilities are designed to run locally. Browser-local tools (Checklist, CSV → Excel-Ready HTML, Case Auditor, WooCommerce → Sheets Webhook Tester, CSV Formula-Injection Safety Checker) process data in your browser without uploading your files. Python CLIs run on your machine with no network requirement for their core function. Your CSVs / RFQs / RPG Maker projects / URL observation exports are not uploaded by the tools themselves. WordPress services are separate fixed-scope work and may require temporary site access after scope confirmation. This catalogue repo contains no customer data, credentials, private payment URLs, or analytics/cookies.
+Offline utilities are designed to run locally. Browser-local tools (Checklist, CSV → Excel-Ready HTML, Case Auditor, WooCommerce → Sheets Webhook Tester, CSV Formula-Injection Safety Checker, CSV Delimiter & Structure Inspector) process data in your browser without uploading your files. Python CLIs run on your machine with no network requirement for their core function. Your CSVs / RFQs / RPG Maker projects / URL observation exports are not uploaded by the tools themselves. WordPress services are separate fixed-scope work and may require temporary site access after scope confirmation. This catalogue repo contains no customer data, credentials, private payment URLs, or analytics/cookies.
 
 ## Licence / ownership
 

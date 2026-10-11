@@ -122,6 +122,15 @@
       "summary": "Offline browser utility that scans CSV for cells beginning with potential spreadsheet formula-injection prefixes (= + - @), preserves legitimate negatives, and exports sanitized CSV plus a diagnostic report. Not malware detection.",
       "runtime": "Modern desktop browser (local HTML)",
       "purchase_url": "https://quietforgetools.itch.io/csv-formula-injection-safety-checker"
+    },
+    {
+      "name": "CSV Delimiter & Structure Inspector",
+      "version": "1.0",
+      "price_gbp": 4,
+      "category": "csv",
+      "summary": "Offline browser utility that detects comma/semicolon/tab/pipe delimiters, diagnoses inconsistent rows, quotes, BOM/line endings, and exports a diagnostic report. Source file never modified.",
+      "runtime": "Modern desktop browser (local HTML)",
+      "purchase_url": "https://quietforgetools.itch.io/csv-delimiter-structure-inspector"
     }
   ]
 }
